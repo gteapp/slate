@@ -21,10 +21,6 @@ deploy:
   local-dir: build
   on:
     branch: master
-  repo: github.com/gteapp/api.git
+  repo: gteapp/api
   target_branch: master
-
-#env:
-#  global:
-#    - GH_REF: github.com/gteapp/api.git
 
