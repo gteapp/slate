@@ -7,4 +7,23 @@ rvm:
   - 2.4.0
 
 cache: bundler
-script: bundle exec middleman build
+#script: bundle exec middleman build
+script:
+  - bundle install
+  - ./deploy.sh
+
+branches:
+  only:
+    - master
+
+deploy:
+  provider: pages
+  keep-history: true
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  local-dir: build
+
+env:
+  global:
+    - GH_REF: github.com/gteapp/api.git
+
