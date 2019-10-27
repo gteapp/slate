@@ -55,7 +55,7 @@ search: true
 ```  
 "announcement",        // Site announcements  >
 "chat",                // Trollbox chat  >
-"connected",           // Statistics of connected users/bots
+"connected",           // Statistics of connected users/bots <br>
 "funding",             // Updates of swap funding rates. Sent every funding interval (usually 8hrs)
 "instrument",          // Instrument updates including turnover and bid/ask
 "insurance",           // Daily Insurance Fund updates
