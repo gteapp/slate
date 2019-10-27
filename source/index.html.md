@@ -52,7 +52,8 @@ search: true
 你可以通过`args`数组同时订阅多个主题  
 
 无需权鉴的主题：  
-```
+```  
+  
 "announcement",        // Site announcements  
 "chat",                // Trollbox chat  
 "connected",           // Statistics of connected users/bots
