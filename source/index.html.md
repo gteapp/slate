@@ -54,8 +54,8 @@ search: true
 无需权鉴的主题：  
 ```  
   
-"announcement",        // Site announcements  
-"chat",                // Trollbox chat  
+"announcement",        // Site announcements  >
+"chat",                // Trollbox chat  >
 "connected",           // Statistics of connected users/bots
 "funding",             // Updates of swap funding rates. Sent every funding interval (usually 8hrs)
 "instrument",          // Instrument updates including turnover and bid/ask
