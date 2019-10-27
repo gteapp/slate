@@ -27,8 +27,28 @@ search: true
 
 # 基本信息
 
-
 # Websocket 接口
+## 示例
+## 连接地址
+将ws客户端连接到wss://testnet.gte.com/realtime
+## 签名Authentication
+- 公开的行情、订单簿、成交列表等数据流无需鉴权；
+- 账户的委托、订单、成交等账户相关数据需要鉴权；
+- 如果鉴权失败，连接将会关闭。
+
+鉴权方式：
+- 在第一次请求的时候，在http head中签名，或者
+- 在ws连接建立后，发送`authKeyExpires`命令。  
+
+以上两种方式都是对地址`GET /realtime`的请求。
+
+
+## 所有命令 
+命令的基本形式```{"op": "<command>", "args": ["arg1", "arg2", "arg3"]}```
+
+## 订阅Subscriptions
+## 消息格式
+## 访问限制
 
 # Http Restful API 
 
