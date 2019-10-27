@@ -26,6 +26,12 @@ search: true
 2019.10.25 12：00 |  委托、深度、行情 | 新增 | -新增委托、深度、行情接口
 
 # 基本信息
+
+
+# Websocket 接口
+
+# Http Restful API 
+
 ## BaseUrl
 
 * `http://{ip}:port`
@@ -73,8 +79,6 @@ search: true
       * hmacSha256（apiSecret,message） 加密成api签名,由api-signature携带
     
   
-
-# Http Restful 
 
 ## 行情接口
 
@@ -348,5 +352,5 @@ count | string | NO | 返回条数最大100条
 }
 ```
 
-
+# 错误代码
 
