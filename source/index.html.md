@@ -53,7 +53,6 @@ search: true
 
 无需权鉴的主题：  
 ```  
-  
 "announcement",        // Site announcements  >
 "chat",                // Trollbox chat  >
 "connected",           // Statistics of connected users/bots
