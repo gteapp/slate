@@ -52,7 +52,8 @@ search: true
 你可以通过`args`数组同时订阅多个主题  
 
 无需权鉴的主题：  
-```shell  
+
+```
 "announcement",        // Site announcements  >
 "chat",                // Trollbox chat  >
 "connected",           // Statistics of connected users/bots<br>
@@ -75,9 +76,11 @@ search: true
 "tradeBin5m",          // 5-minute trade bins
 "tradeBin1h",          // 1-hour trade bins
 "tradeBin1d",          // 1-day trade bins
-```  
-需要权鉴的主题：  
 ```
+
+需要权鉴的主题：  
+
+```  
 "affiliate",   // Affiliate status, such as total referred users & payout %
 "execution",   // Individual executions; can be multiple per order
 "order",       // Live updates on your orders
@@ -87,6 +90,7 @@ search: true
 "transact"     // Deposit/Withdrawal updates
 "wallet"       // Bitcoin address balance data, including total deposits & withdrawals
 ```  
+
 `orderBookL2`推送完整的L2订单簿，数据量很大；  
 推荐使用`orderBookL2_25`订阅行情，推送截断的25档L2订单簿  
 注：L2订单簿中的`id`字段，实际上是price和symbol的组合，并且在给定的价格上是唯一的。它被用于`update`和`delete`等指令。  
