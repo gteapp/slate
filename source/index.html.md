@@ -52,11 +52,11 @@ search: true
 你可以通过`args`数组同时订阅多个主题  
 
 无需权鉴的主题：  
-
-```
+01  
+```  
 "announcement",        // Site announcements  >
 "chat",                // Trollbox chat  >
-"connected",           // Statistics of connected users/bots<br>
+"connected",           // Statistics of connected users/bots
 "funding",             // Updates of swap funding rates. Sent every funding interval (usually 8hrs)
 "instrument",          // Instrument updates including turnover and bid/ask
 "insurance",           // Daily Insurance Fund updates
