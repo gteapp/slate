@@ -31,7 +31,7 @@ search: true
 ## 示例
 ## 连接
 ### 地址
-将ws客户端连接到wss://testnet.gte.com/realtime
+将ws客户端连接到wss://testnet.gte.com
 
 ### 命令
 命令的基本形式```{"op": "<command>", "args": ["arg1", "arg2", "arg3"]}```  
@@ -197,41 +197,54 @@ For example:
     
   
 
-## 行情接口
+## instrument接口
 
-**查询行情数据**
+**查询instrument数据**
 
 **示例**
 
-* GTE `baseUrl/v1/api/pc/ticker/query`
+* GTE `baseUrl/v1/api/pc/instrument/query`
 
 
 **请求参数**
 
 名称 | 类型 | 是否必须 | 描述
 ----- | ---- | ----- | -----
-symbol | string | YES | 交易对
+asset | string | yes | 资产
+symbol | string | yes | 交易对
 
 ```shell
 # Response
 {
   "code": 0,
   "data": {
-    "time": "1568636015342",
-    "symbol": "BTC_USD",           //交易对
-    "best_ask": "10001",         //卖一价
-    "best_bid": "10000",         //买一价
-    "last_price": "10000",       //最新成交价
-    "low_24h": "9999",           //24小时最低价
-    "high_24h": "10400",         //24小时最高价
-    "volume_24h": "0.003997"     //24小时成交量
+    "time": "1573635077085",
+    "rows": [
+      {
+        "precision": "1",           //交易对小数位
+        "asset": "BTC",             //资产
+        "symbol": "ETH_USD",        //交易对
+        "last_price": "150",        //最新成交价
+        "index_price": "186.6",     //指数价格
+        "mark_price": "185.9",      //标记价格
+        "volume_24h": "230",        //24小时成交量(张数)
+        "volume_pos_hold": "172",   //所有持仓量(张数)
+        "change_rate_24h": "0.1",   //24小时前的涨幅 10%
+        "face_value": "1",          //一张合约的面值
+        "quote_currency": "USD",    //合约面值的计价货币
+        "funding_rate": "-0.00375", //当期资金费率
+        "indicative_funding_rate": "-0.00375",   //下期的资金费率
+        "funding_rate_time": "8",                //收取资金费用的时间
+        "indicative_funding_rate_time": "16"     //下去收取资金费用的时间
+      }
+    ]
   },
   "input": null,
   "traceId": "",
   "cost": 0,
   "error": null,
   "msg": null,
-  "time": 1568636015343
+  "time": 1573635077085
 }
 ```
 
