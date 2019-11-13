@@ -170,6 +170,7 @@ For example:
 
    *  构建签名的明文message分三部分
 
+
       1 api-key:请求头携带
 
       2 api-expires：请求头携带
@@ -194,8 +195,236 @@ For example:
       * message等于api-key+api-expires+请求参数排序后的字符串
 
       * hmacSha256（apiSecret,message） 加密成api签名,由api-signature携带
-    
-  
+
+## 查询交易所支持的资产
+
+**查询交易所支持的资产**
+
+**示例**
+
+* GET `baseUrl/v1/api/asset/query`
+
+
+**请求参数**
+
+```shell
+# Response
+{
+  "code": 0,
+  "data": {
+    "rows": [
+      {
+        "asset": "BTC"
+      },
+      {
+        "asset": "ETH"
+      }
+    ]
+  },
+  "input": null,
+  "traceId": "",
+  "cost": 0,
+  "error": null,
+  "msg": null,
+  "time": 1573640300898
+}
+```
+
+
+## 查询资金账户
+
+**查询资金账户**
+
+**示例**
+
+* GET `baseUrl/v1/api/account/fund/query`
+
+**请求头**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+api-key | string | YES | apiKey
+api-expires | string | YES | 当前时间戳毫秒
+api-signature | string | YES | api签名
+
+
+**请求参数**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+asset | string | NO |  资产,不填查询全部资产
+
+
+```shell
+# Response
+{
+    "code":0,
+    "data":{
+        "rows":[
+            {
+                "lock":"0",              //锁定的额度
+                "available":"9",     //余额
+                "asset":"BTC",           //资产
+                "total":"9"          //总额
+            }
+        ]
+    },
+    "input":null,
+    "traceId":"",
+    "cost":0,
+    "error":null,
+    "msg":null,
+    "time":1573639309095
+}
+```
+
+
+## 查询永续合约账户
+
+**查询永续合约账户**
+
+**示例**
+
+* GET `baseUrl/v1/api/account/pc/query`
+
+**请求头**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+api-key | string | YES | apiKey
+api-expires | string | YES | 当前时间戳毫秒
+api-signature | string | YES | api签名
+
+
+**请求参数**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+asset | string | NO |  资产,不填查询全部资产
+
+
+```shell
+# Response
+{
+    "code":0,
+    "data":{
+        "rows":[
+            {
+                "available":"7",      //可用余额      
+                "asset":"BTC",        //资产
+                "total":"10",         //总额
+                "order_margin":"1",   //委托保证金
+                "pos_margin":"2"      //仓位保证金
+            }
+        ]
+    },
+    "input":null,
+    "traceId":"",
+    "cost":0,
+    "error":null,
+    "msg":null,
+    "time":1573639479143
+}
+```
+
+## 账户划转
+
+**账户划转**
+
+**示例**
+
+* POST `baseUrl/v1/api/account/transfer`
+
+**请求头**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+api-key | string | YES | apiKey
+api-expires | string | YES | 当前时间戳毫秒
+api-signature | string | YES | api签名
+
+
+**请求参数**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+asset | string | YES |  资产
+from | string | YES |  转出账户类型
+to | string | YES |  转入账户类型
+volume | string | YES |  数量,最小8位小数点
+
+
+**说明**
+
+账户类型 1.资金账户,2.合约账户
+
+
+```shell
+# Response
+{
+    "code":0,
+    "data":{
+        "time":null
+    },
+    "input":null,
+    "traceId":"",
+    "cost":0,
+    "error":null,
+    "msg":null,
+    "time":1573639855769
+}
+```
+
+
+## 委托接口
+
+
+**创建活动委托**
+
+**示例**
+
+* POST `baseUrl/v1/api/pc/order/create`
+
+**请求头**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+api-key | string | YES | apiKey
+api-expires | string | YES | 当前时间戳毫秒
+api-signature | string | YES | api签名
+
+
+**请求参数**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+client_oid | string | NO | 客户端订单Id,由您设置的订单id来唯一标识您的订单,字符串,长度40
+symbol | string | YES | 交易对
+side | string | YES | 买入1,卖出0
+close_flag | string | YES | 0开仓,1平仓
+price | string | NO | 价格
+qty | string | YES | 张数
+order_type | string | YES | 委托类型,1:限价
+
+
+
+```shell
+# Response
+{
+  "code": 0,
+  "data": {
+    "time": "1568639111357",
+    "order_id": "93814490360972800"   //委托id
+  },
+  "input": null,
+  "traceId": "",
+  "cost": 0,
+  "error": null,
+  "msg": null,
+  "time": 1568639111359
+}
+```
+
 
 ## instrument接口
 
