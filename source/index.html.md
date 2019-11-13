@@ -375,58 +375,48 @@ volume | string | YES |  数量,最小8位小数点
 }
 ```
 
+## 查询永续合约的交易对
 
-## 委托接口
-
-
-**创建活动委托**
+**查询永续合约的交易对**
 
 **示例**
 
-* POST `baseUrl/v1/api/pc/order/create`
-
-**请求头**
-
-名称 | 类型 | 是否必须 | 描述
------ | ---- | ----- | -----
-api-key | string | YES | apiKey
-api-expires | string | YES | 当前时间戳毫秒
-api-signature | string | YES | api签名
+* GTE `baseUrl/v1/api/pc/contract/query`
 
 
 **请求参数**
 
 名称 | 类型 | 是否必须 | 描述
 ----- | ---- | ----- | -----
-client_oid | string | NO | 客户端订单Id,由您设置的订单id来唯一标识您的订单,字符串,长度40
-symbol | string | YES | 交易对
-side | string | YES | 买入1,卖出0
-close_flag | string | YES | 0开仓,1平仓
-price | string | NO | 价格
-qty | string | YES | 张数
-order_type | string | YES | 委托类型,1:限价
-
-
+asset | string | yes | 资产
 
 ```shell
 # Response
 {
   "code": 0,
   "data": {
-    "time": "1568639111357",
-    "order_id": "93814490360972800"   //委托id
-  },
-  "input": null,
-  "traceId": "",
-  "cost": 0,
-  "error": null,
-  "msg": null,
-  "time": 1568639111359
+    "time": "1573642959704",
+    "rows": [
+      {
+        "symbol": "BTC_USD",    //交易对
+        "price_precision": "1"  //价格的最大小数位
+      },
+      {
+        "symbol": "ETH_USD",
+        "price_precision": "1"
+      },
+      {
+        "symbol": "EOS_USD",
+        "price_precision": "6"
+      }
+    ]
+  }
 }
 ```
 
 
-## instrument接口
+
+## 查询instrument数据
 
 **查询instrument数据**
 
@@ -440,7 +430,7 @@ order_type | string | YES | 委托类型,1:限价
 名称 | 类型 | 是否必须 | 描述
 ----- | ---- | ----- | -----
 asset | string | yes | 资产
-symbol | string | yes | 交易对
+symbol | string | no | 交易对 不填查询全部交易对
 
 ```shell
 # Response
@@ -477,68 +467,116 @@ symbol | string | yes | 交易对
 }
 ```
 
+## 查询永续合约的k线
 
-## 深度接口
-
-**查询永续合约信息**
+**查询永续合约的k线**
 
 **示例**
 
-* GTE `baseUrl/v1/api/pc/depth/query`
+* GTE `baseUrl/v1/api/pc/candle/query`
 
 
 **请求参数**
 
 名称 | 类型 | 是否必须 | 描述
 ----- | ---- | ----- | -----
+asset | string | YES | 资产
 symbol | string | YES | 交易对
+start_time | string | NO | 开始时间,时间戳毫秒
+end_time | string | NO | 结束时间,时间戳毫秒
+interval | string | NO | k线时间间隔,分钟
+size | string | NO | 返回条数
+
+**说明**
+interval值 1 5 15 30 60 120 240 360 720 1440 10080 43200
+size 最大1440
+
 
 ```shell
 # Response
 {
   "code": 0,
   "data": {
-    "time": "1568635734093",
-    "ssymbol": "BTC_USD",      //交易对
-    "bids": [
+    "time": "1573641132754",
+    "interval": "1",         
+    "rows": [
       [
-        "10000",   //价格
-        "2848"     //数量
-      ],
-      [
-        "9999",
-        "1"
-      ],
-      [
-        "9998",
-        "30"
+        "1573640940000",    //k线的时间戳毫秒
+        "10009",            //开盘价
+        "10009",            //最高价
+        "10009",            //最低价
+        "10009",            //收盘价
+        "2"                 //量(张数) 
       ]
     ],
-    "asks": [
-      [
-        "10001",
-        "59"
-      ],
-      [
-        "10002",
-        "1"
-      ],
-      [
-        "10003",
-        "3"
-      ]
-    ]
+    "asset": "BTC",
+    "symbol": "BTC_USD"
   },
   "input": null,
   "traceId": "",
   "cost": 0,
   "error": null,
   "msg": null,
-  "time": 1568635734093
+  "time": 1573641132755
 }
 ```
 
-## 创建委托
+
+## orderBook 深度
+
+**查询永续合约信息**
+
+**示例**
+
+* GTE `baseUrl/v1/api/pc/order/book/query`
+
+
+**请求参数**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+asset | string | YES | 资产
+symbol | string | YES | 交易对
+size | string | NO | 返回数量
+
+**说明**
+
+size 填写15,买卖共30条,最大50
+
+```shell
+# Response
+{
+  "code": 0,
+  "data": {
+    "time": "1573643118030",
+    "bids": [             //bid 买入
+      [
+        "8888",           //价格
+        "136"             //量
+      ],
+      [
+        "8000",
+        "96"
+      ]
+    ],
+    "asks": [            //ask 
+      [
+        "10009",
+        "229"
+      ],
+      [
+        "10021",
+        "188"
+      ]
+    ],
+    "asset": "BTC",          //资产
+    "symbol": "BTC_USD"      //交易对
+  },
+}
+```
+
+
+## 创建活动委托
 
 
 **创建活动委托**
@@ -561,6 +599,7 @@ api-signature | string | YES | api签名
 名称 | 类型 | 是否必须 | 描述
 ----- | ---- | ----- | -----
 client_oid | string | NO | 客户端订单Id,由您设置的订单id来唯一标识您的订单,字符串,长度40
+asset | string | YES | 资产
 symbol | string | YES | 交易对
 side | string | YES | 买入1,卖出0
 close_flag | string | YES | 0开仓,1平仓
@@ -568,22 +607,25 @@ price | string | NO | 价格
 qty | string | YES | 张数
 order_type | string | YES | 委托类型,1:限价
 
+**说明**
+order_type等于1,price必填
 
 
 ```shell
 # Response
+      
 {
-  "code": 0,
-  "data": {
-    "time": "1568639111357",
-    "order_id": "93814490360972800"   //委托id
-  },
-  "input": null,
-  "traceId": "",
-  "cost": 0,
-  "error": null,
-  "msg": null,
-  "time": 1568639111359
+    "code":0,
+    "data":{
+        "time":"1573645810154",
+        "order_id":"114813904143597952"   //委托id
+    },
+    "input":null,
+    "traceId":"",
+    "cost":0,
+    "error":null,
+    "msg":null,
+    "time":1573645810155
 }
 ```
 
@@ -611,6 +653,7 @@ api-signature | string | YES | api签名
 名称 | 类型 | 是否必须 | 描述
 ----- | ---- | ----- | -----
 id | string | YES | 委托id
+asset | string | YES | 资产
 symbol | string | YES | 交易对
 
 
@@ -636,7 +679,7 @@ symbol | string | YES | 交易对
 
 ## 查询委托
 
-**查询活动委托**
+**查询委托**
 
 **示例**
 
@@ -655,24 +698,23 @@ api-signature | string | YES | api签名
 
 名称 | 类型 | 是否必须 | 描述
 ----- | ---- | ----- | -----
+asset | string | YES | 资产
 symbol | string | NO | 交易对
 filter | string | NO | 过滤器, json格式的字符串
-start_time | string | NO | 时间戳毫秒,不填为当前时间
-end_time | string | NO | 时间戳毫秒
-reverse | string | NO | 1.时间倒序,0.时间顺序,不填为倒序
+gt_order_id | string | NO | order_id,请求大于order_id的数据,gt和lt都填,以gt为准
+lt_order_id | string | NO | order_id,请求小于order_id的数据
 count | string | NO | 返回条数最大100条
 
-**查询逻辑**
+**说明**
 
-* reverse 等于1时,按照时间倒序排列, 返回小于等于start_time和大于等于end_time的活动委托
-
-* reverse 等于0时,按照时间程序排列, 返回大于等于start_time和小于等于end_time的活动委托
+使用gt_order_id查询委托按照id顺序排列
+使用lt_order_id查询委托按照id倒叙排列
 
 **filter**
 
 * json格式的字符串
 
-* 支持 key status(委托状态) , 类型 字符串数组
+* 支持 status(委托状态) , 类型 字符串数组
 
 * 例如{"status":["1","8"]}
 
@@ -683,22 +725,23 @@ count | string | NO | 返回条数最大100条
     "data":{
         "time":"1568639823340",
         "orders":[
-            {
-                "id":"93800123938637312",   //委托id
-                "fee":"0",                  //手续费
-                "price":"10000",            //价格
-                "qty":"2",                  //张数
-                "leverage":"10",            //杠杆
-                "symbol":"BTC_USD",           //交易对
-                "ctime":"1568635692270",    //创建时间
-                "client_oid":null,          //客户端id
-                "avg_price":"0",            //成交均价
-                "filled_qty":"1",           //已经成交张数
-                "close_flag":"0",           //0开仓,1平仓        
+            {    
+                "id":"114813904143597952", //委托id
+                "status":"4", //委托状态  1:已创建未匹配 2:新建未成交 4:待取消 8:已取消 16:部分成交 32:全部成交     
+                "fee":"0.023",    //手续费
+                "price":"8500",   //价格
+                "qty":"1",        //张数
+                "leverage":"5",   //杠杆
+                "ctime":"1573645767887",     //订单创建时间
+                "client_oid":null,           //客户端id
+                "avg_price":"0",             //成交均价
+                "filled_qty":"0",            //已成交张数
+                "close_flag":"0",            //0开仓,1平仓       
                 "side":"1",                  //买入1,卖出0
-                "order_margin":"0.00001",   //委托保证金
-                "order_type":"1",            //委托类型
-                "status":"2"                //委托状态  1:已创建未匹配 2:新建未成交 4:待取消 8:已取消 16:部分成交 32:全部成交     
+                "asset":"BTC",               //资产
+                "symbol":"BTC_USD",          //交易对
+                "order_margin":"0.000023",   //委托保证金
+                "order_type":"1"             //委托类型
             }
         ]
     },
