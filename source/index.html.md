@@ -207,8 +207,6 @@ For example:
 * GET `baseUrl/v1/api/asset/query`
 
 
-**请求参数**
-
 ```shell
 # Response
 {
@@ -524,9 +522,9 @@ size 最大1440
 ```
 
 
-## orderBook 深度
+## 查询深度
 
-**查询永续合约信息**
+**查询深度**
 
 **示例**
 
@@ -801,6 +799,9 @@ count | string | NO | 返回条数,最大100条
 
 ## 调整杠杆
 
+
+### 调整杠杆111
+
 **调整杠杆**
 
 **示例**
@@ -852,5 +853,4 @@ leverage | string | YES | 调整杠杆数
   "time": 1573703825189
 }
 ```
-
 
