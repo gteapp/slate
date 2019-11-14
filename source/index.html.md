@@ -200,8 +200,6 @@ For example:
 
 ## 查询交易所支持的资产
 
-**查询交易所支持的资产**
-
 **示例**
 
 * GET `baseUrl/v1/api/asset/query`
@@ -232,8 +230,6 @@ For example:
 
 
 ## 查询资金账户
-
-**查询资金账户**
 
 **示例**
 
@@ -281,8 +277,6 @@ asset | string | NO |  资产,不填查询全部资产
 
 ## 查询永续合约账户
 
-**查询永续合约账户**
-
 **示例**
 
 * GET `baseUrl/v1/api/account/pc/query`
@@ -328,8 +322,6 @@ asset | string | NO |  资产,不填查询全部资产
 ```
 
 ## 账户划转
-
-**账户划转**
 
 **示例**
 
@@ -377,8 +369,6 @@ volume | string | YES |  数量,最小8位小数点
 
 ## 查询永续合约的交易对
 
-**查询永续合约的交易对**
-
 **示例**
 
 * GTE `baseUrl/v1/api/pc/contract/query`
@@ -417,8 +407,6 @@ asset | string | yes | 资产
 
 
 ## 查询instrument数据
-
-**查询instrument数据**
 
 **示例**
 
@@ -468,8 +456,6 @@ symbol | string | no | 交易对 不填查询全部交易对
 ```
 
 ## 查询永续合约的k线
-
-**查询永续合约的k线**
 
 **示例**
 
@@ -524,8 +510,6 @@ size 最大1440
 
 ## 查询深度
 
-**查询深度**
-
 **示例**
 
 * GTE `baseUrl/v1/api/pc/order/book/query`
@@ -576,10 +560,56 @@ size 填写15,买卖共30条,最大50
 ```
 
 
+## 查询用户永续合约的配置
+
+**示例**
+
+* POST `baseUrl/v1/api/pc/setting/query`
+
+**请求头**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+api-key | string | YES | apiKey
+api-expires | string | YES | 当前时间戳毫秒
+api-signature | string | YES | api签名
+
+
+**请求参数**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+asset | string | YES | 资产
+symbol | string | YES | 交易对
+
+
+
+```shell
+# Response
+{
+    "code":0,
+    "data":{
+        "time":"1573720738789",
+        "asset":"BTC",              //资产    
+        "symbol":"BTC_USD",         //交易对
+        "max_leverage":"100",       //最大杠杆
+        "bid_leverage":"5",         //买入杠杆
+        "ask_leverage":"5",         //卖出杠杆
+        "cross_leverage":"5",       //全仓杠杆
+        "margin_mode":"2"           //1.全仓,2.逐仓
+    },
+    "input":null,
+    "traceId":"",
+    "cost":0,
+    "error":null,
+    "msg":null,
+    "time":1573720738789
+}
+```
+
+
+
 ## 创建活动委托
-
-
-**创建活动委托**
 
 **示例**
 
@@ -632,9 +662,6 @@ order_type等于1,price必填
 
 ## 撤销委托
 
-
-**撤销活动委托**
-
 **示例**
 
 * POST `baseUrl/v1/api/pc/order/cancel`
@@ -678,8 +705,6 @@ symbol | string | YES | 交易对
 
 
 ## 查询委托
-
-**查询委托**
 
 **示例**
 
@@ -752,8 +777,6 @@ count | string | NO | 返回条数最大100条
 
 ## 查询成交记录
 
-**查询成交记录**
-
 **示例**
 
 * GTE `baseUrl/v1/api/pc/order/query`
@@ -798,11 +821,6 @@ count | string | NO | 返回条数,最大100条
 ```
 
 ## 调整杠杆
-
-
-### 调整杠杆111
-
-**调整杠杆**
 
 **示例**
 
@@ -851,6 +869,93 @@ leverage | string | YES | 调整杠杆数
   "error": null,
   "msg": null,
   "time": 1573703825189
+}
+```
+
+
+## 追加仓位保证金
+
+**示例**
+
+* POST `baseUrl/v1/api/pc/margin/increase`
+
+**请求头**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+api-key | string | YES | apiKey
+api-expires | string | YES | 当前时间戳毫秒
+api-signature | string | YES | api签名
+
+
+**请求参数**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+asset | string | YES | 资产
+symbol | string | YES | 交易对
+long_flag | string | YES | 1.多仓,0.空仓
+increase_flag | string | YES | 1.增加,2.减少
+margin | string | YES | 保证金数量
+
+
+
+```shell
+# Response
+{
+    "code":0,
+    "data":{
+        "time":"1573715942669"
+    },
+    "input":null,
+    "traceId":"",
+    "cost":0,
+    "error":null,
+    "msg":null,
+    "time":1573715942669
+}
+```
+
+
+## 开关自动追加保证金
+
+**示例**
+
+* POST `baseUrl/v1/api/pc/margin/auto`
+
+**请求头**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+api-key | string | YES | apiKey
+api-expires | string | YES | 当前时间戳毫秒
+api-signature | string | YES | api签名
+
+
+**请求参数**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+asset | string | YES | 资产
+symbol | string | YES | 交易对
+long_flag | string | YES | 1.多仓,0.空仓
+open_flag | string | YES | 1.开启,0.关闭
+
+
+
+```shell
+# Response
+{
+    "code":0,
+    "data":{
+        "time":"1573716528703"
+    },
+    "input":null,
+    "traceId":"",
+    "cost":0,
+    "error":null,
+    "msg":null,
+    "time":1573716528705
 }
 ```
 
