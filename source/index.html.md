@@ -153,6 +153,8 @@ For example:
 
 * `http://{ip}:port`
 
+* baseUrl/v1/api/pc/asset/query v1为版本号
+
 ## API签名说明
 * 部分api请求需要在请求头携带签名
 
@@ -705,10 +707,6 @@ gt_order_id | string | NO | order_id,请求大于order_id的数据,gt和lt都填
 lt_order_id | string | NO | order_id,请求小于order_id的数据
 count | string | NO | 返回条数最大100条
 
-**说明**
-
-使用gt_order_id查询委托按照id顺序排列
-使用lt_order_id查询委托按照id倒叙排列
 
 **filter**
 
@@ -724,9 +722,9 @@ count | string | NO | 返回条数最大100条
     "code":0,
     "data":{
         "time":"1568639823340",
-        "orders":[
+        "rows":[
             {    
-                "id":"114813904143597952", //委托id
+                "order_id":"114813904143597952", //委托id
                 "status":"4", //委托状态  1:已创建未匹配 2:新建未成交 4:待取消 8:已取消 16:部分成交 32:全部成交     
                 "fee":"0.023",    //手续费
                 "price":"8500",   //价格
@@ -756,5 +754,103 @@ count | string | NO | 返回条数最大100条
 
 ## 查询成交记录
 
+**查询成交记录**
+
+**示例**
+
+* GTE `baseUrl/v1/api/pc/order/query`
+
+
+**请求参数**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+asset | string | YES | 资产
+symbol | string | YES | 交易对
+gt_trade_id | string | NO | 成交记录id,请求大于trade_id的数据,gt和lt都填,以gt为准
+lt_trade_id | string | NO | 成交记录id,请求小于trade_id的数据
+count | string | NO | 返回条数,最大100条
+
+
+
+```shell
+# Response
+{
+  "code": 0,
+  "data": {
+
+    "rows": [
+      {
+        "price": "8999",    //成交价格
+        "qty": "4",         //成交数量张数
+        "trade_id": "115025316845580800", //成交记录id
+        "asset": "BTC",                   //资产    
+        "symbol": "BTC_USD",              //交易对
+        "trade_time": "1573696172596"     //交易时间毫秒
+      }
+    ]
+  },
+  "input": null,
+  "traceId": "",
+  "cost": 0,
+  "error": null,
+  "msg": null,
+  "time": 1573703825189
+}
+```
+
+## 调整杠杆
+
+**调整杠杆**
+
+**示例**
+
+* POST `baseUrl/v1/api/pc/leverage/change`
+
+**请求头**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+api-key | string | YES | apiKey
+api-expires | string | YES | 当前时间戳毫秒
+api-signature | string | YES | api签名
+
+
+**请求参数**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+asset | string | YES | 资产
+symbol | string | YES | 交易对
+mode | string | YES | 仓位模式,1.全仓,2.逐仓
+long_flag | string | NO | 1.多仓,0.空仓,全仓模式可以不填
+leverage | string | YES | 调整杠杆数
+
+
+
+```shell
+# Response
+{
+  "code": 0,
+  "data": {
+
+    "rows": [
+      {
+        "asset": "BTC",             //资产    
+        "symbol": "BTC_USD",        //交易对
+        "mode": "1",     //仓位模式,1.全仓,2.逐仓
+        "leverage":"3"   //杠杆
+
+      }
+    ]
+  },
+  "input": null,
+  "traceId": "",
+  "cost": 0,
+  "error": null,
+  "msg": null,
+  "time": 1573703825189
+}
+```
 
 
