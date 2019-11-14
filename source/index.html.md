@@ -37,11 +37,7 @@ ws客户端连接到wss://testwss.gte.io
 
 **说明**
 
-返回最新的各种价格,交易量等
-pc为永续合约
-instrument为订阅管道
-BTC为资产
-BTC_USD为交易对
+推送最新的各种价格,交易量等,pc为永续合约trade为订阅管道BTC为资产BTC_USD为交易对
 
 **订阅**
 
@@ -87,11 +83,7 @@ BTC_USD为交易对
 
 **说明**
 
-返回最新的成交记录
-pc为永续合约
-trade为订阅管道
-BTC为资产
-BTC_USD为交易对
+推送最新的成交记录,pc为永续合约trade为订阅管道BTC为资产BTC_USD为交易对
 
 
 **订阅**
@@ -128,12 +120,124 @@ BTC_USD为交易对
             
         }
      ,
-   "time": "1564295185000"        /* String , 服务器返回数据的时间戳毫秒 */
+   "time": "1564295185000"        // 服务器返回数据的时间戳毫秒
 }
 ```
 
 
 ## orderBook 增量
+
+**说明**
+
+订阅返回全量数据,推送返回增量数据,pc为永续合约order_book为订阅管道BTC为资产BTC_USD为交易对
+
+
+action的值partial,delete,update,insert
+
+partial 订阅返回全量数据
+
+delete 删除当前价格的深度
+
+update 更新当前价格的深度,量为最终值
+
+insert 新增当前价格的深度
+
+**订阅**
+
+{
+    "op":"sub",
+     "event":"pc#order_book#BTC#BTC_USD"
+}
+
+**取消订阅**
+
+{
+    "op":"sub",
+     "event":"pc#order_book#BTC#BTC_USD"
+}
+
+
+```shell
+# Response
+{
+    "data":{
+        "action":"partial",          
+        "rows":[
+            {
+                "asset":"BTC",       //资产
+                "price":"9000",      //价格
+                "side":"sell",       //买卖方向
+                "size":"590",        //量(张数)
+                "symbol":"BTC_USD"   //交易对
+            },
+            {
+                "asset":"BTC",
+                "price":"8990",
+                "side":"buy",
+                "size":"677",
+                "symbol":"BTC_USD"
+            }
+        ]
+    },
+    "event":"pc#order_book#BTC#BTC_USD",
+    "time":"1573281525515"
+}
+```
+
+## orderBook 全量
+
+**说明**
+
+推送返回全量数据,pc为永续合约order_book_full为订阅管道BTC为资产BTC_USD为交易对
+
+
+**订阅**
+
+{
+    "op":"sub",
+     "event":"pc#order_book_full#BTC#BTC_USD"
+}
+
+**取消订阅**
+
+{
+    "op":"sub",
+     "event":"pc#order_book_full#BTC#BTC_USD"
+}
+
+
+```shell
+# Response
+{
+    "data":{
+        "asset":"BTC",         //资产
+        "symbol":"BTC_USD",    //交易对
+        "asks":[               //ask卖出,bid买入
+            [
+                "10009",      //价格   
+                "2299"        //量(张数)
+            ],
+            [
+                "10021",
+                "2555"
+            ]
+        ],
+       
+        "bids":[
+            [
+                "10007",
+                "3946"
+            ],
+            [
+                "10006",
+                "3000"
+            ]
+        ]
+    },
+    "event":"pc#order_book_full#BTC1#BTC_USD1",
+    "time":"1573544168931"
+}
+```
 
 
 
