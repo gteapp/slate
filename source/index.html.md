@@ -28,124 +28,114 @@ search: true
 # 基本信息
 
 # Websocket 接口
-## 示例
-## 连接
-### 地址
-将ws客户端连接到wss://testnet.gte.com
 
-### 命令
-命令的基本形式```{"op": "<command>", "args": ["arg1", "arg2", "arg3"]}```  
-\<command\>值见命令目录  
-`args`数组在某些命令中是可选项  
+ws客户端连接到wss://testwss.gte.io
 
-命令目录
-- 订阅Subscriptions
-  - subscribe
-  - unsubscribe
-- 权鉴Authentication
-- 心跳Heartbeating  
-  - raw ping
-  - cancelAllAfter
+客户端每20秒发送字符串{"op":"ping"},服务端返回{"op":"pong"},服务端2分钟没有收到客户端消息,自动断开客户端
 
-## 订阅Subscriptions
-连上ws后，订阅行情数据的推送，发送消息 `{"op": "subscribe", "args": [<SubscriptionTopic>]}`  
-你可以通过`args`数组同时订阅多个主题  
+## instrument 
 
-无需权鉴的主题：  
+**说明**
 
-`"announcement",        // Site announcements  `  
-`"chat",                // Trollbox chat  `  
-`"connected",           // Statistics of connected users/bots`  
-"funding",             // Updates of swap funding rates. Sent every funding interval (usually 8hrs)  
-"instrument",          // Instrument updates including turnover and bid/ask  
-"insurance",           // Daily Insurance Fund updates  
-"liquidation",         // Liquidation orders as they're entered into the book  
-"orderBookL2_25",      // Top 25 levels of level 2 order book  
-"orderBookL2",         // Full level 2 order book  
-"orderBook10",         // Top 10 levels using traditional full book push  
-"publicNotifications", // System-wide notifications (used for short-lived messages)  
-"quote",               // Top level of the book  
-"quoteBin1m",          // 1-minute quote bins  
-"quoteBin5m",          // 5-minute quote bins  
-"quoteBin1h",          // 1-hour quote bins  
-"quoteBin1d",          // 1-day quote bins  
-"settlement",          // Settlements  
-"trade",               // Live trades  
-"tradeBin1m",          // 1-minute trade bins  
-"tradeBin5m",          // 5-minute trade bins  
-"tradeBin1h",          // 1-hour trade bins  
-"tradeBin1d",          // 1-day trade bins  
+返回最新的各种价格,交易量等
+pc为永续合约
+instrument为订阅管道
+BTC为资产
+BTC_USD为交易对
+
+**订阅**
+
+{
+    "op":"sub",
+     "event":"pc#instrument#BTC#BTC_USD"
+}
+
+**取消订阅**
+
+{
+    "op":"unsub",
+     "event":"pc#instrument#BTC#BTC_USD"
+}
 
 
-需要权鉴的主题：  
-
-```  
-"affiliate",   // Affiliate status, such as total referred users & payout %
-"execution",   // Individual executions; can be multiple per order
-"order",       // Live updates on your orders
-"margin",      // Updates on your current account balance and margin requirements
-"position",    // Updates on your positions
-"privateNotifications", // Individual notifications - currently not used
-"transact"     // Deposit/Withdrawal updates
-"wallet"       // Bitcoin address balance data, including total deposits & withdrawals
-```  
-
-`orderBookL2`推送完整的L2订单簿，数据量很大；  
-推荐使用`orderBookL2_25`订阅行情，推送截断的25档L2订单簿  
-注：L2订单簿中的`id`字段，实际上是price和symbol的组合，并且在给定的价格上是唯一的。它被用于`update`和`delete`等指令。  
-`orderBook10`推送10档，但是包含更多数据；
-
-## 权鉴Authentication
-- 公开的行情、订单簿、成交列表等数据流无需鉴权；
-- 账户的委托、订单、成交等账户相关数据需要鉴权；
-- 如果鉴权失败，连接将会关闭。
-
-鉴权方式：
-- 在第一次请求的时候，在http head中签名，或者
-- 在ws连接建立后，发送`authKeyExpires`命令。  
-
-以上两种方式都是对地址`GET /realtime`的请求。  
-
-```
-// signature is hex(HMAC_SHA256(secret, 'GET/realtime' + expires))
-// expires must be a number, not a string.
-{"op": "authKeyExpires", "args": ["<APIKey>", <expires>, "<signature>"]}
+```shell
+# Response
+{
+    "data":{
+        "asset":"BTC",    //资产
+        "change_rate_24h":"-0.1112",   //24小时价格变化幅度，-0.13代表跌了13%
+        "face_value":"1",              //合约面值
+        "quote_currency":"USD",        //面值计价货币
+        "funding_rate":"-0.0037",      //当期资金费率
+        "funding_rate_time":"2",       //当期资金费率到期时间小时
+        "indicative_funding_rate":"-0.0037",  //预期资金费率
+        "indicative_funding_rate_time":"10",  //预期资金费率到期时间小时
+        "index_price":"9374.1",         //指数价格
+        "last_price":"9994",                   //最新成交价
+        "mark_price":"9365.3",                 //标记价格
+        "split_char":"_",                     //交易对分隔符
+        "symbol":"BTC_USD",                   //交易对
+        "volume_24h":"30022",                 //24小时成交量
+        "volume_pos_hold":"269016"            //未平仓的合约持仓量
+    },
+    "event":"pc#instrument#BTC1#BTC_USD1",
+    "time":"1573022591950"
+}
 ```
 
-## 心跳Heartbeating  
-检测连接是否掉线。  
-如果客户端使用的库支持`hybi-13`或`ping/pong`，可以发送ping到服务端，服务端返回pong。  
-Due to changes in browser power-saving modes, we no longer support expectant pings via the WebSocket API.  
-建议的掉线检测方式：
-- 收到一条消息后，设定5秒钟的timer；
-- 如果在timer到期之前收到新的消息，reset timer；
-- 如果timer到期，发送一条ping消息（或者字符串"ping"）；
-- 等待服务器返回pong（或字符串"pong"），如果5秒钟内没有收到回复，记录错误并重连。  
+## 成交记录  
 
-### Dead Man’s Switch (Auto Cancel)
-某些意外情况下，例如你在GTE有较大的活动订单，但同时你的机房断电或断网了，你希望你的订单被全部取消。
-Via REST at /order/cancelAllAfter or via WebSocket via the example below, one can set a millisecond timeout. This will start a timer. If cancelAllAfter is not called again before time runs out, all of your existing orders on all symbols will be canceled.  
+**说明**
 
-To cancel this operation and keep your orders open, pass a timeout of 0.  
+返回最新的成交记录
+pc为永续合约
+trade为订阅管道
+BTC为资产
+BTC_USD为交易对
 
-Advanced users of BitMEX should use this operation. A common use pattern is to set a timeout of 60000, and call it every 15 seconds. This gives you sufficient wiggle room to keep your orders open in case of a network hiccup, while still offering significant protection in case of a larger outage. Of course, the parameters are up to you.  
 
-We recommend not setting a timeout of less than 5 seconds to avoid being rate limited or having your orders unexpectedly canceled in case of network congestion.  
+**订阅**
 
-For example:  
-```
-// Places a dead man's switch at 60 seconds.
-> {"op": "cancelAllAfter", "args": 60000}
-  < {"now":"2015-09-02T14:18:43.536Z","cancelTime":"2015-09-02T14:19:43.536Z",
-     "request":{"op":"cancelAllAfter","args":60000}}
-// Cancels the switch.
-> {"op": "cancelAllAfter", "args": 0}
-  < {"now":"2015-09-02T14:19:11.617Z","cancelTime":0,"request":{"op":"cancelAllAfter","args":0}}
+{
+    "op":"sub",
+     "event":"pc#trade#BTC#BTC_USD"
+}
+
+**取消订阅**
+
+{
+    "op":"unsub",
+     "event":"pc#trade#BTC#BTC_USD"
+}
+
+
+```shell
+# Response
+{
+    "event": "pc#trade#BTC#BTC_USD",             //订阅的事件
+    "data": 
+        {
+            "rows":[
+              {
+                "trade_time": "1564295185000",     //成交时间 
+                "side": "sell",                    //sell,buy  
+                "price": "1000.00",                //成交价格
+                "qty": "3"                         //成交量(张数)              
+              }
+            ]
+
+
+            
+        }
+     ,
+   "time": "1564295185000"        /* String , 服务器返回数据的时间戳毫秒 */
+}
 ```
 
 
-## 消息格式
-## 访问限制
+## orderBook 增量
+
+
 
 # Http Restful API 
 
