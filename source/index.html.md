@@ -37,7 +37,7 @@ ws客户端连接到wss://testwss.gte.io
 
 **说明**
 
-推送最新的各种价格,交易量等,pc为永续合约trade为订阅管道BTC为资产BTC_USD为交易对
+推送最新的各种价格,交易量等,pc为永续合约,instrument为订阅管道,BTC为资产,BTC_USD为交易对
 
 **订阅**
 
@@ -83,7 +83,7 @@ ws客户端连接到wss://testwss.gte.io
 
 **说明**
 
-推送最新的成交记录,pc为永续合约trade为订阅管道BTC为资产BTC_USD为交易对
+推送最新的成交记录,pc为永续合约,trade为订阅管道,BTC为资产,BTC_USD为交易对
 
 
 **订阅**
@@ -129,7 +129,7 @@ ws客户端连接到wss://testwss.gte.io
 
 **说明**
 
-订阅返回全量数据,推送返回增量数据,pc为永续合约order_book为订阅管道BTC为资产BTC_USD为交易对
+订阅返回全量数据,推送返回增量数据,pc为永续合约,order_book为订阅管道,BTC为资产,BTC_USD为交易对
 
 
 action的值partial,delete,update,insert
@@ -188,7 +188,7 @@ insert 新增当前价格的深度
 
 **说明**
 
-推送返回全量数据,pc为永续合约order_book_full为订阅管道BTC为资产BTC_USD为交易对
+推送返回全量数据,pc为永续合约,order_book_full为订阅管道,BTC为资产,BTC_USD为交易对
 
 
 **订阅**
