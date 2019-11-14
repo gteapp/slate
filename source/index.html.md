@@ -109,6 +109,8 @@ ws客户端连接到wss://testwss.gte.io
         {
             "rows":[
               {
+                "asset":"BTC",                     //资产
+                "symbol":"BTC_USD",                //资产
                 "trade_time": "1564295185000",     //成交时间 
                 "side": "sell",                    //sell,buy  
                 "price": "1000.00",                //成交价格
