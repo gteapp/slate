@@ -58,7 +58,7 @@ ws客户端连接到wss://testwss.gte.io
 # Response
 {
     "data":{
-        "asset":"BTC",    //资产
+        "settle_currency":"BTC",    //资产
         "change_rate_24h":"-0.1112",   //24小时价格变化幅度，-0.13代表跌了13%
         "face_value":"1",              //合约面值
         "quote_currency":"USD",        //面值计价货币
@@ -109,7 +109,7 @@ ws客户端连接到wss://testwss.gte.io
         {
             "rows":[
               {
-                "asset":"BTC",                     //资产
+                "settle_currency":"BTC",                     //资产
                 "symbol":"BTC_USD",                //交易对
                 "trade_time": "1564295185000",     //成交时间 
                 "side": "sell",                    //sell,buy  
@@ -166,14 +166,14 @@ insert 新增当前价格的深度
         "action":"partial",          
         "rows":[
             {
-                "asset":"BTC",       //资产
+                "settle_currency":"BTC",       //资产
                 "price":"9000",      //价格
                 "side":"sell",       //买卖方向
                 "size":"590",        //量(张数)
                 "symbol":"BTC_USD"   //交易对
             },
             {
-                "asset":"BTC",
+                "settle_currency":"BTC",
                 "price":"8990",
                 "side":"buy",
                 "size":"677",
@@ -212,7 +212,7 @@ insert 新增当前价格的深度
 # Response
 {
     "data":{
-        "asset":"BTC",         //资产
+        "settle_currency":"BTC",         //资产
         "symbol":"BTC_USD",    //交易对
         "asks":[               //ask卖出,bid买入
             [
@@ -297,6 +297,8 @@ insert 新增当前价格的深度
       * hmacSha256（apiSecret,message） 加密成api签名,由api-signature携带
 
 ## 查询交易所支持的资产
+
+**限速规则**：1次/1s
 
 **示例**
 
