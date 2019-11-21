@@ -507,7 +507,7 @@ volume | string | YES |  数量,最小8位小数点
 
 **示例**
 
-* GTE `baseUrl/v1/api/pc/contract/query`
+* GET `baseUrl/v1/api/pc/contract/query`
 
 
 **请求参数**
@@ -548,7 +548,7 @@ asset | string | yes | 资产
 
 **示例**
 
-* GTE `baseUrl/v1/api/pc/instrument/query`
+* GET `baseUrl/v1/api/pc/instrument/query`
 
 
 **请求参数**
@@ -599,7 +599,7 @@ symbol | string | no | 交易对 不填查询全部交易对
 
 **示例**
 
-* GTE `baseUrl/v1/api/pc/candle/query`
+* GET `baseUrl/v1/api/pc/candle/query`
 
 
 **请求参数**
@@ -654,7 +654,7 @@ size 最大1440
 
 **示例**
 
-* GTE `baseUrl/v1/api/pc/order/book/query`
+* GET `baseUrl/v1/api/pc/order/book/query`
 
 
 **请求参数**
@@ -858,7 +858,7 @@ symbol | string | YES | 交易对
 
 **示例**
 
-* GTE `baseUrl/v1/api/pc/order/query`
+* GET `baseUrl/v1/api/pc/order/query`
 
 **请求头**
 
@@ -931,7 +931,7 @@ count | string | NO | 返回条数最大100条
 
 **示例**
 
-* GTE `baseUrl/v1/api/pc/order/query`
+* GET `baseUrl/v1/api/pc/order/query`
 
 
 **请求参数**
