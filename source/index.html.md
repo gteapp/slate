@@ -76,7 +76,7 @@ update 更新
         "asset_class":"pc"          //交易资产类别,pc永续合约
         "settle_currency":"BTC",    //资产
         "change_rate_24h":"-0.1112",   //24小时价格变化幅度，-0.13代表跌了13%
-        "lot_size":"1",              //合约面值
+        "lot_size":"1",              //合约面值,1表示1张合约价格1个quote_currency
         "quote_currency":"USD",        //面值计价货币
         "funding_rate":"-0.0037",      //当期资金费率
         "funding_rate_time":"2",       //当期资金费率到期时间小时
@@ -159,11 +159,11 @@ update 更新当前价格的深度,量为最终值
 
 insert 新增当前价格的深度
 
-id当前交易对唯一表示,id和价格相互反推
+id当前交易对唯一表示,id和price相互反推,symbol_id和tick_size可以在订阅instrument中获取
 
 计算公式
-id = (100000000 * symbolId) - (price / instrumentTickSize)
-price = ((100000000 * symbolId) - id) * instrumentTickSize
+id = (100000000 * symbol_id) - (price / tick_size)
+price = ((100000000 * symbol_id) - id) * tick_size
 
 **订阅**
 
@@ -186,25 +186,26 @@ price = ((100000000 * symbolId) - id) * instrumentTickSize
     "action":"partial",
     "table":"order_book",     
     "data":[
-
+     
             {
-                "id":"121231",
-                "asset_class":"pc",          //交易资产类别,pc永续合约             
+                "id":"399911110",               //唯一标识
+                "asset_class":"pc",            //交易资产类别,pc永续合约             
                 "settle_currency":"BTC",       //资产
-                "price":"9000",      //价格
-                "side":"sell",       //买卖方向
-                "size":"590",        //量(张数)
-                "symbol":"BTC_USD"   //交易对
+                "price":"8889",               //价格
+                "side":"sell",                //买卖方向
+                "size":"590",                 //量(张数)
+                "symbol":"BTC_USD"            //交易对
             },
             {
-                "id":"121231",
+                "id":"399911200",
                 "asset_class":"pc",       
                 "settle_currency":"BTC",
-                "price":"8990",
+                "price":"8880",
                 "side":"buy",
                 "size":"677",
                 "symbol":"BTC_USD"
             }
+
         
     ],
     "event":"pc#order_book#BTC#BTC_USD",
