@@ -29,7 +29,7 @@ search: true
 
 # Websocket 接口
 
-ws客户端连接到wss://testwss.gte.io
+ws客户端连接到 wss://testtd.gte.io
 
 客户端每20秒发送字符串{"op":"ping"},服务端返回{"op":"pong"},服务端2分钟没有收到客户端消息,自动断开客户端
 
@@ -37,7 +37,18 @@ ws客户端连接到wss://testwss.gte.io
 
 **说明**
 
-推送最新的各种价格,交易量等,pc为永续合约,instrument为订阅管道,BTC为资产,BTC_USD为交易对
+最新的各种价格,行情,交易量等,pc为永续合约,instrument为订阅管道,BTC为资产,BTC_USD为交易对
+
+订阅返回全量数据
+
+推送返回数据变更的字段
+
+action的值partial,update
+
+partial 订阅返回全量数据
+
+update 更新
+
 
 **订阅**
 
@@ -57,10 +68,15 @@ ws客户端连接到wss://testwss.gte.io
 ```shell
 # Response
 {
-    "data":{
+    "table":"instrument",
+    "action":"action的值partial"
+    "key":["change_rate_24h","quote_currency"] //data数据中的字段名
+    "data":[
+      {
+        "asset_class":"pc"          //交易资产类别,pc永续合约
         "settle_currency":"BTC",    //资产
         "change_rate_24h":"-0.1112",   //24小时价格变化幅度，-0.13代表跌了13%
-        "face_value":"1",              //合约面值
+        "lot_size":"1",              //合约面值
         "quote_currency":"USD",        //面值计价货币
         "funding_rate":"-0.0037",      //当期资金费率
         "funding_rate_time":"2",       //当期资金费率到期时间小时
@@ -73,8 +89,9 @@ ws客户端连接到wss://testwss.gte.io
         "symbol":"BTC_USD",                   //交易对
         "volume_24h":"30022",                 //24小时成交量
         "volume_pos_hold":"269016"            //未平仓的合约持仓量
-    },
-    "event":"pc#instrument#BTC1#BTC_USD1",
+      }  
+    ],
+    "event":"pc#instrument#BTC#BTC_USD",
     "time":"1573022591950"
 }
 ```
@@ -106,21 +123,19 @@ ws客户端连接到wss://testwss.gte.io
 {
     "event": "pc#trade#BTC#BTC_USD",             //订阅的事件
     "data": 
-        {
-            "rows":[
+        [
+          
               {
-                "settle_currency":"BTC",                     //资产
+                "asset_class":"pc"          //交易资产类别,pc永续合约
+                "settle_currency":"BTC",            //资产
                 "symbol":"BTC_USD",                //交易对
                 "trade_time": "1564295185000",     //成交时间 
                 "side": "sell",                    //sell,buy  
                 "price": "1000.00",                //成交价格
                 "qty": "3"                         //成交量(张数)              
               }
-            ]
-
-
             
-        }
+        ]
      ,
    "time": "1564295185000"        // 服务器返回数据的时间戳毫秒
 }
@@ -144,6 +159,12 @@ update 更新当前价格的深度,量为最终值
 
 insert 新增当前价格的深度
 
+id当前交易对唯一表示,id和价格相互反推
+
+计算公式
+id = (100000000 * symbolId) - (price / instrumentTickSize)
+price = ((100000000 * symbolId) - id) * instrumentTickSize
+
 **订阅**
 
 {
@@ -162,10 +183,13 @@ insert 新增当前价格的深度
 ```shell
 # Response
 {
-    "data":{
-        "action":"partial",          
-        "rows":[
+    "action":"partial",
+    "table":"order_book",     
+    "data":[
+
             {
+                "id":"121231",
+                "asset_class":"pc",          //交易资产类别,pc永续合约             
                 "settle_currency":"BTC",       //资产
                 "price":"9000",      //价格
                 "side":"sell",       //买卖方向
@@ -173,14 +197,16 @@ insert 新增当前价格的深度
                 "symbol":"BTC_USD"   //交易对
             },
             {
+                "id":"121231",
+                "asset_class":"pc",       
                 "settle_currency":"BTC",
                 "price":"8990",
                 "side":"buy",
                 "size":"677",
                 "symbol":"BTC_USD"
             }
-        ]
-    },
+        
+    ],
     "event":"pc#order_book#BTC#BTC_USD",
     "time":"1573281525515"
 }
@@ -190,7 +216,7 @@ insert 新增当前价格的深度
 
 **说明**
 
-推送返回全量数据,pc为永续合约,order_book_full为订阅管道,BTC为资产,BTC_USD为交易对
+每次推送全量数据,pc为永续合约,order_book_full为订阅管道,BTC为资产,BTC_USD为交易对
 
 
 **订阅**
@@ -203,7 +229,7 @@ insert 新增当前价格的深度
 **取消订阅**
 
 {
-    "op":"sub",
+    "op":"unsub",
      "event":"pc#order_book_full#BTC#BTC_USD"
 }
 
@@ -213,11 +239,12 @@ insert 新增当前价格的深度
 {
     "data":{
         "settle_currency":"BTC",         //资产
-        "symbol":"BTC_USD",    //交易对
-        "asks":[               //ask卖出,bid买入
+        "symbol":"BTC_USD",              //交易对
+        "asset_class":"pc",              //交易资产类别,pc永续合约         
+        "asks":[                         //ask卖出,bid买入
             [
-                "10009",      //价格   
-                "2299"        //量(张数)
+                "10009",                 //价格   
+                "2299"                   //量(张数)
             ],
             [
                 "10021",
