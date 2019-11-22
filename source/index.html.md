@@ -273,9 +273,9 @@ price = ((100000000 * symbol_id) - id) * tick_size
 
 # Http Restful API 
 
-## BaseUrl
+## url
 
-* `http://{ip}:port`
+*  baseUrl `http://testthirdapi.gte.io/`
 
 * baseUrl/v1/api/pc/asset/query v1为版本号
 
