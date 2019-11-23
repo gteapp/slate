@@ -142,7 +142,7 @@ update 更新
 ```
 
 
-## orderBook 增量
+## orderBook 
 
 **说明**
 
@@ -213,61 +213,6 @@ price = ((100000000 * symbol_id) - id) * tick_size
 }
 ```
 
-## orderBook 全量
-
-**说明**
-
-每次推送全量数据,pc为永续合约,order_book_full为订阅管道,BTC为资产,BTC_USD为交易对
-
-
-**订阅**
-
-{
-    "op":"sub",
-     "event":"pc#order_book_full#BTC#BTC_USD"
-}
-
-**取消订阅**
-
-{
-    "op":"unsub",
-     "event":"pc#order_book_full#BTC#BTC_USD"
-}
-
-
-```shell
-# Response
-{
-    "data":{
-        "settle_currency":"BTC",         //资产
-        "symbol":"BTC_USD",              //交易对
-        "asset_class":"pc",              //交易资产类别,pc永续合约         
-        "asks":[                         //ask卖出,bid买入
-            [
-                "10009",                 //价格   
-                "2299"                   //量(张数)
-            ],
-            [
-                "10021",
-                "2555"
-            ]
-        ],
-       
-        "bids":[
-            [
-                "10007",
-                "3946"
-            ],
-            [
-                "10006",
-                "3000"
-            ]
-        ]
-    },
-    "event":"pc#order_book_full#BTC1#BTC_USD1",
-    "time":"1573544168931"
-}
-```
 
 
 
