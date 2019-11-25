@@ -72,7 +72,7 @@ update 更新
 # Response
 {
     "table":"instrument",
-    "action":"action的值partial"
+    "action":"partial"
     "key":["change_rate_24h","quote_currency"] //data数据中的字段名
     "data":[
       {
