@@ -33,6 +33,9 @@ ws客户端连接到 wss://testtd.gte.io
 
 客户端每20秒发送字符串{"op":"ping"},服务端返回{"op":"pong"},服务端2分钟没有收到客户端消息,自动断开客户端
 
+订阅成功或取消订阅会返回字符串,{"status":"0","request":"客户端请求字符串"},status等于0,表示成功,小于0
+表示错误,具体错误查看错误代码
+
 ## instrument 
 
 **说明**
@@ -222,7 +225,7 @@ price = ((100000000 * symbol_id) - id) * tick_size
 
 *  baseUrl `http://testthirdapi.gte.io/`
 
-* baseUrl/v1/api/pc/asset/query v1为版本号
+*  /v1/api/pc/asset/query v1为版本号
 
 * 返回数据code等于0,表示请求成功,小于0表示错误,具体清查看错误代码
 
