@@ -29,7 +29,7 @@ search: true
 
 # Websocket 接口
 
-ws客户端连接到 wss://testtd.gte.io
+ws客户端连接到 wss://td.gte.io
 
 客户端每20秒发送字符串{"op":"ping"},服务端返回{"op":"pong"},服务端2分钟没有收到客户端消息,自动断开客户端
 
@@ -223,7 +223,7 @@ price = ((100000000 * symbol_id) - id) * tick_size
 
 ## url
 
-*  baseUrl `http://testthirdapi.gte.io/`
+*  baseUrl `https://api.gte.io/`
 
 *  /v1/api/pc/asset/query v1为版本号
 
