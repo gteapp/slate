@@ -29,6 +29,7 @@ The GTE API uses the following error codes:
 -10053 | api请求太频繁
 -10054 | apiKey不存在
 -10055 | api请求权限错误
+-10201 | wss事件已经订阅
 -11001 | 账户异常
 -11002 | 账户已存在
 -11003 | 资金账户已存在
