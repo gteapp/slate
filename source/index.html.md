@@ -29,7 +29,7 @@ search: true
 
 # Websocket 接口
 
-ws连接地址 wss://td.gte.io
+ws连接地址 wss://td.gte.io/ws
 
 客户端每20秒发送字符串{"op":"ping"},服务端返回{"op":"pong"},服务端2分钟没有收到客户端消息,自动断开客户端
 
@@ -52,7 +52,7 @@ signature:签名
 加密方式: hmacSha256（apiSecret,url+expires） 
 
 apiSecret:注册api_key时获取
-url:ws连接地址
+url:GET/ws
 
 
 
@@ -131,7 +131,7 @@ update 更新
 }
 ```
 
-## trade 成交记录  
+## trade 
 
 
 **说明**
