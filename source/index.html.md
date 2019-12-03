@@ -29,14 +29,46 @@ search: true
 
 # Websocket 接口
 
-ws客户端连接到 wss://td.gte.io
+ws连接地址 wss://td.gte.io
 
 客户端每20秒发送字符串{"op":"ping"},服务端返回{"op":"pong"},服务端2分钟没有收到客户端消息,自动断开客户端
 
 订阅或取消等会返回字符串,{"status":"0","request":"客户端请求字符串"},status等于0,表示成功,小于0
 表示错误,具体错误查看错误代码
 
+## auth 验证
+
+
+**参数说明**
+
+api_key:用户注册api_key获取
+
+expires：当前时间的时间戳(毫秒),推荐当前时间加上3~5秒,防止请求过期
+
+signature:签名 
+
+**签名说明**
+
+加密方式: hmacSha256（apiSecret,url+expires） 
+
+apiSecret:注册api_key时获取
+url:ws连接地址
+
+
+
+**验证**
+{
+  "op":"auth_key_expires",
+  "args":{
+    "api_key":"XXXXX",
+    "expires":"1575029954231",
+    "signature","xxxxxxx"
+  }
+}
+
+
 ## instrument 
+
 
 **说明**
 
@@ -101,6 +133,7 @@ update 更新
 
 ## trade 成交记录  
 
+
 **说明**
 
 推送最新的成交记录,pc为永续合约,trade为订阅管道,BTC为资产,BTC_USD为交易对
@@ -146,6 +179,8 @@ update 更新
 
 
 ## orderBook 
+
+
 
 **说明**
 
@@ -213,6 +248,66 @@ price = ((100000000 * symbol_id) - id) * tick_size
     ],
     "event":"pc#order_book#BTC#BTC_USD",
     "time":"1573281525515"
+}
+```
+
+
+## order 
+
+**需要验证**
+
+
+**说明**
+
+推送当前当前用户的活动委托的变更信息
+
+
+
+**订阅**
+
+{
+    "op":"sub",
+     "event":"pc#order#BTC#BTC_USD"
+}
+
+**取消订阅**
+
+{
+    "op":"unsub",
+     "event":"pc#order#BTC#BTC_USD"
+}
+
+
+```shell
+# Response 
+{
+    "action":"insert",
+    "data":[
+        {
+            "avg_price":"0",             //成交均价
+            "close_flag":"0",            //0.开仓,1.pc
+            "ctime":"1575353429226",     //委托创建时间
+            "fee":"0",                   //手续费
+            "filled_qty":"0",            //成交张数
+            "leverage":"15",             //杠杆
+            "order_id":"121976354928411008",  //order_id
+            "order_margin":"0.000878",        //委托保证金   
+            "order_type":"1",                 //委托类型1.限价委托
+            "price":"155",                    //委托价格
+            "qty":"2",                        //委托张数
+            "settle_currency":"ETH",          //资产
+            "side":"1",                       //1.买入,0.卖出
+            "status":"1",                     // //委托状态  1:待报 2:已报 4:待撤销 8:已撤销 16:部分成交 32:全部成交  
+            "symbol":"ETH_USD",               //交易对
+            "client_oid":"123456"             //客户端自己定义的id
+        }
+    ],
+    "event":"pc#order#ETH#ETH_USD",
+    "keys":[
+
+    ],
+    "table":"order",
+    "time":"1575353430109"
 }
 ```
 
@@ -846,7 +941,7 @@ count | string | NO | 返回条数最大100条
         "rows":[
             {    
                 "order_id":"114813904143597952", //委托id
-                "status":"4", //委托状态  1:已创建未匹配 2:新建未成交 4:待取消 8:已取消 16:部分成交 32:全部成交     
+                "status":"4", //委托状态  1:待报 2:已报 4:待撤销 8:已撤销 16:部分成交 32:全部成交     
                 "fee":"0.023",    //手续费
                 "price":"8500",   //价格
                 "qty":"1",        //张数
