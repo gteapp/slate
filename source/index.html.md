@@ -41,7 +41,7 @@ ws连接地址 wss://td.gte.io/ws
 
 **参数说明**
 
-api_key:用户注册api_key获取
+api_key:用户注册api_key时获取
 
 expires：当前时间的时间戳(毫秒),推荐当前时间加上3~5秒,防止请求过期
 
@@ -57,10 +57,11 @@ url:GET/ws
 
 
 **验证**
+
 {
   "op":"auth_key_expires",
   "args":{
-    "api_key":"XXXXX",
+    "api_key":"xxx",
     "expires":"1575029954231",
     "signature","xxxxxxx"
   }
