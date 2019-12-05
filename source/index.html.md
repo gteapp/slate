@@ -59,12 +59,14 @@ url:GET/ws
 **验证**
 
 {
+
   "op":"auth_key_expires",
+
   "args":{
     "api_key":"UVpYHxxxIzdhcsTFFZuuHhIp",
     "expires":"1575365733524",
-    "signature":"e36acaa887df38b1527e96234f5c730a56dcfc2a327cd269f2cf4a6e6515e00f"
-  }
+    "signature":"e36acaa887df38b1527e96234f5c730a56dcfc2a327cd269f2cf4a6e6515e00f"}
+
 }
 
 
