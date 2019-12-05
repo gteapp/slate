@@ -61,9 +61,9 @@ url:GET/ws
 {
   "op":"auth_key_expires",
   "args":{
-    "api_key":"xxx",
-    "expires":"1575029954231",
-    "signature","xxxxxxx"
+    "api_key":"UVpYHxxxIzdhcsTFFZuuHhIp",
+    "expires":"1575365733524",
+    "signature","e36acaa887df38b1527e96234f5c730a56dcfc2a327cd269f2cf4a6e6515e00f"
   }
 }
 
@@ -260,7 +260,7 @@ price = ((100000000 * symbol_id) - id) * tick_size
 
 **说明**
 
-推送当前当前用户的活动委托的变更信息
+推送当前用户的活动委托的变更信息
 
 
 
@@ -268,14 +268,14 @@ price = ((100000000 * symbol_id) - id) * tick_size
 
 {
     "op":"sub",
-     "event":"pc#order#BTC#BTC_USD"
+     "event":"pc#order#BTC"
 }
 
 **取消订阅**
 
 {
     "op":"unsub",
-     "event":"pc#order#BTC#BTC_USD"
+     "event":"pc#order#BTC"
 }
 
 
@@ -313,6 +313,124 @@ price = ((100000000 * symbol_id) - id) * tick_size
 ```
 
 
+## execution 
+
+**需要验证**
+
+
+**说明**
+
+推送当前用户的委托的执行信息
+
+
+
+**订阅**
+
+{
+    "op":"sub",
+     "event":"pc#execution#BTC"
+}
+
+**取消订阅**
+
+{
+    "op":"unsub",
+     "event":"pc#execution#BTC"
+}
+
+
+```shell
+# Response 
+{
+    "action":"insert",
+    "data":[
+        {
+            "ctime":"1575526474231",              //execution时间
+            "cum_qty":"2",                        //累计成交量
+            "exec_id":"122702112030277888",       //执行id
+            "exec_type":"8",                      //执行类型 1.新增,2.未成交,4.成交,8,完成,16.撤销
+            "last_qty":"2",                       //上一次推送快照的委托量
+            "leaves_qty":"0",                     //委托未成交量
+            "maker_flag":"1",                     //1.当前委托执行是maker,0.taker
+            "orderId":"122702086658933120",       //委托id
+            "order_price":"7500",                 //委托价格
+            "order_qty":"2",                      //委托量
+            "order_status":"32",                  //委托状态
+            "order_type":"1",                     //委托类型
+            "settle_currency":"BTC",              //资产
+            "side":"1",                           //1.买入,0.卖出
+            "close_flag":"1",                     //1.平仓,0.开仓
+            "symbol":"BTC_USD",                   //交易对
+            "trade_match_id":"d6fb023b-2d31-4db2-8335-b6b0e6bf3570"  //成交撮合id
+        }
+    ],
+    "event":"pc#execution#BTC",
+    "keys":[
+
+    ],
+    "table":"execution",
+    "time":"1575526474231"
+}
+```
+
+## position 
+
+**需要验证**
+
+
+**说明**
+
+定时推送用户的仓位信息
+
+
+
+**订阅**
+
+{
+    "op":"sub",
+     "event":"pc#position#BTC"
+}
+
+**取消订阅**
+
+{
+    "op":"unsub",
+     "event":"pc#position#BTC"
+}
+
+
+```shell
+# Response 
+{
+    "action":"update",
+    "data":[
+        {
+            "asset":"BTC",                //资产
+            "auto_increase_flag":"0",     //当前仓位是否自动追加保证金 1.是,0.否
+            "avail_qty":"49",             //仓位可平量
+            "entry_price":"6711.6",       //开仓均价
+            "leverage":"15",              //仓位杠杆
+            "liquidation_price":"6368.2", //强平价
+            "long_flag":"1",              //1.多仓，0.空仓
+            "maint_margin_ratio":"0.005", //默认的维持保证金比率
+            "margin_mode":"2",            //保证金模式 1.全仓,2.逐仓
+            "pnl":"0.0006",               //未实现盈亏
+            "pos_margin":"0.000437",      //仓位保证金
+            "pos_margin_ratio":"0.1638",  //仓位保证金率
+            "pos_pnl_ratio":"0",          //收益率
+            "qty":"49",                   //仓位持仓量
+            "realised_pnl":"0",           //已实现盈亏
+            "symbol":"BTC_USD"            //交易对
+        }
+    ],
+    "event":"pc#position#BTC",
+    "keys":[
+
+    ],
+    "table":"position",
+    "time":"1575528039621"
+}
+```
 
 
 # Http Restful API 
