@@ -92,7 +92,7 @@ update 更新
 
 {
     "op":"sub",
-     "event":"pc#instrument#BTC#BTC_USD"
+    "event":"pc#instrument#BTC#BTC_USD"
 }
 
 **取消订阅**
@@ -111,7 +111,7 @@ update 更新
     "key":["change_rate_24h","quote_currency"] //data数据中的字段名
     "data":[
       {
-        "asset_class":"pc"          //交易资产类别,pc永续合约
+        "instrument_type":"pc",          //交易资产类别,pc永续合约
         "settle_currency":"BTC",    //资产
         "change_rate_24h":"-0.1112",   //24小时价格变化幅度，-0.13代表跌了13%
         "lot_size":"1",              //合约面值,1表示1张合约价格1个quote_currency
@@ -165,7 +165,7 @@ update 更新
         [
           
               {
-                "asset_class":"pc"          //交易资产类别,pc永续合约
+                "instrument_type":"pc",          //交易资产类别,pc永续合约
                 "settle_currency":"BTC",            //资产
                 "symbol":"BTC_USD",                //交易对
                 "trade_time": "1564295185000",     //成交时间 
@@ -230,7 +230,7 @@ price = ((100000000 * symbol_id) - id) * tick_size
      
             {
                 "id":"399911110",               //唯一标识
-                "asset_class":"pc",            //交易资产类别,pc永续合约             
+                "instrument_type":"pc",            //交易资产类别,pc永续合约             
                 "settle_currency":"BTC",       //资产
                 "price":"8889",               //价格
                 "side":"sell",                //买卖方向
@@ -239,7 +239,7 @@ price = ((100000000 * symbol_id) - id) * tick_size
             },
             {
                 "id":"399911200",
-                "asset_class":"pc",       
+                "instrument_type":"pc",       
                 "settle_currency":"BTC",
                 "price":"8880",
                 "side":"buy",
@@ -287,6 +287,7 @@ price = ((100000000 * symbol_id) - id) * tick_size
     "action":"insert",
     "data":[
         {
+            "instrument_type":"pc",      //交易类型 pc永续合约
             "avg_price":"0",             //成交均价
             "close_flag":"0",            //0.开仓,1.pc
             "ctime":"1575353429226",     //委托创建时间
@@ -347,6 +348,7 @@ price = ((100000000 * symbol_id) - id) * tick_size
     "action":"insert",
     "data":[
         {
+            "instrument_type",:"pc",      //交易类型 pc永续合约
             "ctime":"1575526474231",              //execution时间
             "cum_qty":"2",                        //累计成交量
             "exec_id":"122702112030277888",       //执行id
@@ -407,13 +409,14 @@ price = ((100000000 * symbol_id) - id) * tick_size
     "action":"update",
     "data":[
         {
-            "asset":"BTC",                //资产
+            "instrument_type",:"pc",      //交易类型 pc永续合约
+            "settle_currency":"BTC",                //资产
             "auto_increase_flag":"0",     //当前仓位是否自动追加保证金 1.是,0.否
             "avail_qty":"49",             //仓位可平量
             "entry_price":"6711.6",       //开仓均价
             "leverage":"15",              //仓位杠杆
             "liquidation_price":"6368.2", //强平价
-            "long_flag":"1",              //1.多仓，0.空仓
+            "side":"1",                    //1.多仓，0.空仓
             "maint_margin_ratio":"0.005", //默认的维持保证金比率
             "margin_mode":"2",            //保证金模式 1.全仓,2.逐仓
             "pnl":"0.0006",               //未实现盈亏
