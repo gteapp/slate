@@ -52,6 +52,7 @@ signature:签名
 加密方式: hmacSha256（apiSecret,url+expires） 
 
 apiSecret:注册api_key时获取
+
 url:GET/ws
 
 
@@ -59,13 +60,13 @@ url:GET/ws
 **验证**
 
 {
-
-  "op":"auth_key_expires",
-
-  "args":{
+  
+    "op":"auth_key_expires",
+    "args":{
     "api_key":"UVpYHxxxIzdhcsTFFZuuHhIp",
     "expires":"1575365733524",
-    "signature":"e36acaa887df38b1527e96234f5c730a56dcfc2a327cd269f2cf4a6e6515e00f"}
+    "signature":"e36acaa887df38b1527e96234f5c730a56dcfc2a327cd269f2cf4a6e6515e00f"
+    }
 
 }
 
@@ -91,8 +92,14 @@ update 更新
 **订阅**
 
 {
+  
     "op":"sub",
-    "event":"pc#instrument#BTC#BTC_USD"
+    "args":{
+      "instrument_type":"pc",
+      "table":"instrument",
+      "settle_currency":"BTC",
+      "symbol":"BTC_USD"
+      }
 }
 
 **取消订阅**
