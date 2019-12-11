@@ -62,6 +62,7 @@ url:GET/ws
 {
   
     "op":"auth_key_expires",
+
     "args":{
     "api_key":"UVpYHxxxIzdhcsTFFZuuHhIp",
     "expires":"1575365733524",
@@ -94,6 +95,7 @@ update 更新
 {
   
     "op":"sub",
+
     "args":{
       "instrument_type":"pc",
       "table":"instrument",
@@ -106,7 +108,13 @@ update 更新
 
 {
     "op":"unsub",
-     "event":"pc#instrument#BTC#BTC_USD"
+
+    "args":{
+      "instrument_type":"pc",
+      "table":"instrument",
+      "settle_currency":"BTC",
+      "symbol":"BTC_USD"
+      }
 }
 
 
@@ -152,15 +160,20 @@ update 更新
 **订阅**
 
 {
-    "op":"sub",
-     "event":"pc#trade#BTC#BTC_USD"
+
+     
+     "op":"sub",
+
+     "args":{"instrument_type":"pc","table":"trade","settle_currency":"BTC","symbol":"BTC_USD"}
 }
 
 **取消订阅**
 
 {
+    
     "op":"unsub",
-     "event":"pc#trade#BTC#BTC_USD"
+
+    "args":{"instrument_type":"pc","table":"trade","settle_currency":"BTC","symbol":"BTC_USD"}
 }
 
 
@@ -191,7 +204,6 @@ update 更新
 ## orderBook 
 
 
-
 **说明**
 
 订阅返回全量数据,推送返回增量数据,pc为永续合约,order_book为订阅管道,BTC为资产,BTC_USD为交易对
@@ -216,15 +228,19 @@ price = ((100000000 * symbol_id) - id) * tick_size
 **订阅**
 
 {
+    
     "op":"sub",
-     "event":"pc#order_book#BTC#BTC_USD"
+
+   "args":{"instrument_type":"pc","table":"order_book","settle_currency":"BTC","symbol":"BTC_USD"}
 }
 
 **取消订阅**
 
 {
+    
     "op":"sub",
-     "event":"pc#order_book#BTC#BTC_USD"
+
+    "args":{"instrument_type":"pc","table":"order_book","settle_currency":"BTC","symbol":"BTC_USD"}
 }
 
 
@@ -276,15 +292,20 @@ price = ((100000000 * symbol_id) - id) * tick_size
 **订阅**
 
 {
+  
     "op":"sub",
-     "event":"pc#order#BTC"
+
+    "args":{"instrument_type":"pc","table":"order","settle_currency":"BTC"}
+
 }
 
 **取消订阅**
 
 {
+    
     "op":"unsub",
-     "event":"pc#order#BTC"
+
+    "args":{"instrument_type":"pc","table":"order","settle_currency":"BTC"}
 }
 
 
@@ -337,15 +358,20 @@ price = ((100000000 * symbol_id) - id) * tick_size
 **订阅**
 
 {
+    
     "op":"sub",
-     "event":"pc#execution#BTC"
+
+    "args":{"instrument_type":"pc","table":"execution","settle_currency":"BTC"}
 }
 
 **取消订阅**
 
 {
+    
     "op":"unsub",
-     "event":"pc#execution#BTC"
+
+    "args":{"instrument_type":"pc","table":"execution","settle_currency":"BTC"
+    
 }
 
 
@@ -398,15 +424,19 @@ price = ((100000000 * symbol_id) - id) * tick_size
 **订阅**
 
 {
+    
     "op":"sub",
-     "event":"pc#position#BTC"
+
+    "args":{"instrument_type":"pc","table":"position","settle_currency":"BTC"}
 }
 
 **取消订阅**
 
 {
+    
     "op":"unsub",
-     "event":"pc#position#BTC"
+
+    "args":{"instrument_type":"pc","table":"position","settle_currency":"BTC"}
 }
 
 
