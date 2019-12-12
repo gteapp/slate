@@ -1252,7 +1252,7 @@ api-signature | string | YES | api签名
 asset | string | YES | 资产
 symbol | string | YES | 交易对
 long_flag | string | YES | 1.多仓,0.空仓
-increase_flag | string | YES | 1.增加,2.减少
+increase_flag | string | YES | 1.增加,0.减少
 margin | string | YES | 保证金数量
 
 
