@@ -107,7 +107,7 @@ update 更新
     "op":"unsub",
 
     "args":{"instrument_type":"pc","table":"instrument","settle_currency":"BTC","symbol":"BTC_USD"}
-    
+
 }
 
 
@@ -137,7 +137,6 @@ update 更新
         "volume_pos_hold":"269016"            //未平仓的合约持仓量
       }  
     ],
-    "event":"pc#instrument#BTC#BTC_USD",
     "time":"1573022591950"
 }
 ```
@@ -175,7 +174,7 @@ update 更新
 ```shell
 # Response
 {
-    "event": "pc#trade#BTC#BTC_USD",             //订阅的事件
+    "table":"trade",
     "data": 
         [
           
@@ -269,7 +268,6 @@ price = ((100000000 * symbol_id) - id) * tick_size
 
         
     ],
-    "event":"pc#order_book#BTC#BTC_USD",
     "time":"1573281525515"
 }
 ```
@@ -333,7 +331,6 @@ price = ((100000000 * symbol_id) - id) * tick_size
             "client_oid":"123456"             //客户端自己定义的id
         }
     ],
-    "event":"pc#order#ETH#ETH_USD",
     "keys":[
 
     ],
@@ -401,7 +398,6 @@ price = ((100000000 * symbol_id) - id) * tick_size
             "trade_match_id":"d6fb023b-2d31-4db2-8335-b6b0e6bf3570"  //成交撮合id
         }
     ],
-    "event":"pc#execution#BTC",
     "keys":[
 
     ],
@@ -467,7 +463,6 @@ price = ((100000000 * symbol_id) - id) * tick_size
             "symbol":"BTC_USD"            //交易对
         }
     ],
-    "event":"pc#position#BTC",
     "keys":[
 
     ],
@@ -914,7 +909,7 @@ size 填写15,买卖共30条,最大50
 
 **示例**
 
-* POST `baseUrl/v1/api/pc/setting/query`
+* GET `baseUrl/v1/api/pc/setting/query`
 
 **请求头**
 
