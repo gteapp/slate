@@ -1132,7 +1132,7 @@ count | string | NO | 返回条数最大100条
 
 **示例**
 
-* GET `baseUrl/v1/api/pc/order/query`
+* GET `baseUrl/v1/api/pc/trade/query`
 
 
 **请求参数**
