@@ -1198,7 +1198,7 @@ asset | string | YES | 资产
 symbol | string | YES | 交易对
 mode | string | YES | 仓位模式,1.全仓,2.逐仓
 long_flag | string | NO | 1.多仓,0.空仓,全仓模式可以不填
-leverage | string | YES | 调整杠杆数
+leverage | string | YES | 调整杠杆数,小数点两位
 
 
 
