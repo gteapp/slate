@@ -767,7 +767,7 @@ symbol | string | no | 交易对 不填查询全部交易对
     "time": "1573635077085",
     "rows": [
       {
-        "precision": "1",           //交易对小数位
+        "price_precision": "1",           //交易对价格小数位数
         "asset": "BTC",             //资产
         "symbol": "ETH_USD",        //交易对
         "last_price": "150",        //最新成交价
