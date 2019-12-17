@@ -134,7 +134,8 @@ update 更新
         "split_char":"_",                     //交易对分隔符
         "symbol":"BTC_USD",                   //交易对
         "volume_24h":"30022",                 //24小时成交量
-        "volume_pos_hold":"269016"            //未平仓的合约持仓量
+        "volume_pos_hold":"269016",            //未平仓的合约持仓量
+        "price_precision": "1",           //交易对价格小数位数
       }  
     ],
     "time":"1573022591950"
@@ -468,6 +469,61 @@ price = ((100000000 * symbol_id) - id) * tick_size
     ],
     "table":"position",
     "time":"1575528039621"
+}
+```
+
+
+## margin 
+
+**需要验证**
+
+
+**说明**
+
+定时推送用户的永续合约账户信息
+
+
+
+**订阅**
+
+{
+    
+    "op":"sub",
+
+    "args":{"instrument_type":"pc","table":"margin","settle_currency":"BTC"}
+
+}
+
+**取消订阅**
+
+{
+    
+    "op":"unsub",
+
+    "args":{"instrument_type":"pc","table":"margin","settle_currency":"BTC"}
+
+}
+
+
+```shell
+# Response 
+{
+    "action":"partial",
+    "data":[
+        {
+            "available":"9.2392817",         //余额
+            "instrument_type":"pc",         //交易类型 pc永续合约
+            "order_margin":"0",             //委托保证金
+            "pos_margin":"0.4583322",       //仓位保证金
+            "settle_currency":"BTC",        //资产类别
+            "total":"9.6976139"             //总额
+        }
+    ],
+    "keys":[
+
+    ],
+    "table":"margin",
+    "time":"1576573209743"
 }
 ```
 
