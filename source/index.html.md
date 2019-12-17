@@ -1134,7 +1134,7 @@ filter | string | YES | json格式的字符串
 
 * {"order_id"["20001","20002"]}
   
-   order_id:数组,最大100个
+   order_id:数组,最大50个
 
 
 ```shell
