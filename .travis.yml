@@ -9,7 +9,7 @@ rvm:
 gem:
   - 1.5.4
 
-cache: bundler
+#cache: bundler
 script: bundle exec middleman build
 
 branches:
