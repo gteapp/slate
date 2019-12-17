@@ -1102,6 +1102,57 @@ symbol | string | YES | 交易对
 }
 ```
 
+## 批量撤销委托
+
+**限速规则**：1次/10s
+
+**示例**
+
+* POST `baseUrl/v1/api/pc/order/cancel_batch`
+
+**请求头**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+api-key | string | YES | apiKey
+api-expires | string | YES | 当前时间戳毫秒
+api-signature | string | YES | api签名
+
+
+**请求参数**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+asset | string | YES | 资产
+symbol | string | YES | 交易对
+filter | string | YES | json格式的字符串
+
+
+**filter**
+
+* json格式的字符串
+
+* {"order_id"["20001","20002"]}
+  
+   order_id:数组,最大100个
+
+
+```shell
+# Response
+{
+  "code": 0,
+  "data": {
+    "time": "1568639111357",
+  },
+  "input": null,
+  "traceId": "",
+  "cost": 0,
+  "error": null,
+  "msg": null,
+  "time": 1568639111359
+}
+```
+
 
 
 ## 查询委托
