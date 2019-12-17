@@ -25,6 +25,7 @@ search: true
 --------- | ------- | ----------- | ---------
 2019.10.25 12：00 |  委托、深度、行情 | 新增 | -新增委托、深度、行情接口
 
+
 # 基本信息
 
 # Websocket 接口
@@ -53,8 +54,7 @@ signature:签名
 
 apiSecret:注册api_key时获取
 
-url:GET/ws
-
+url = "GET/ws"   
 
 
 **验证**
@@ -551,35 +551,30 @@ price = ((100000000 * symbol_id) - id) * tick_size
    * api-signature ： api签名
 
 
-* 签名规则
+* 签名规则  
+    - 构建签名的明文message：分三部分构成  
+	    1 api-key:请求头携带
 
-   *  构建签名的明文message分三部分
+        2 api-expires：请求头携带
 
+        3 请求参数组成的字符串 paras_string:  
+         
+            * 根据参数名称(key)按照ascii值排序, 例如查询委托,排序后的字符串为 `{"count":"20","end_time":"1570701726000","filter":"{"status":["1"],"order_id":"123000001"}","start_time":"1570788306000","symbol":"BTC_USD"}`  
+            * 如果参数count为空或为null,不需要加入排序  
+            * 复杂数据类型字段，例如filter字段 {key:value} json类型字符串,filter字段本身参加排序,字段内容不需要排序  
+            * 构造字符串paras_string时建议统一去除空格，例如上例中 `...filter":"{"status":["1"],"order_id":"123000001"}...` 和 `...filter":"{"status": ["1"],"order_id": "123000001"}...`(带有空格)将导致不同的签名  
+            * 发送给服务端的参数字符串(例如带空格或反斜杠)，和参加签名的重构字符串 paras_string（例如不带空格或反斜杠）不一致，也是签名错误的常见原因  
+        
+  - 秘钥   
 
-      1 api-key:请求头携带
+       * apiSecret为创建api-key时显示的对应秘钥  
 
-      2 api-expires：请求头携带
+  - 加密成api签名   
 
-      3 请求参数组成的字符串
+      * message等于api-key+api-expires+请求参数排序后的字符串  
 
-         * 请求参数根据参数名称按照ascii值排序,
-
-             * 例如查询委托,排序后的字符串为 {"count":"20","end_time":"1570701726000","filter":"{"status":"1","order_id":"123000001"}","start_time":"1570788306000","symbol":"BTC_USD"}
-
-             * 如果参数count为空或为null,不需要加入排序
-   
-             * filter字段 {key:value} json类型字符串,filter字段参加排序,字段内容不需要排序
-
-
-   * 秘钥
-
-       * apiSecret为创建api-key时显示的对应秘钥
-
-   * 加密成api签名
-
-      * message等于api-key+api-expires+请求参数排序后的字符串
-
-      * hmacSha256（apiSecret,message） 加密成api签名,由api-signature携带
+      * hmacSha256（apiSecret,message） 加密成api签名,由api-signature携带   
+  
 
 ## 查询交易所支持的资产
 

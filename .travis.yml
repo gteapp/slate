@@ -6,6 +6,11 @@ rvm:
   - 2.3.3
   - 2.4.0
 
+before_install:
+  - gem update --system
+  - gem install bundler:1.15.4
+  - cat /etc/issue
+
 cache: bundler
 script: bundle exec middleman build
 
