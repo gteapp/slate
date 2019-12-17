@@ -6,6 +6,9 @@ rvm:
   - 2.3.3
   - 2.4.0
 
+gem:
+  - 1.5.4
+
 cache: bundler
 script: bundle exec middleman build
 
