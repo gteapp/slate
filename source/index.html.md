@@ -988,10 +988,12 @@ symbol | string | YES | 交易对
         "time":"1573720738789",
         "asset":"BTC",              //资产    
         "symbol":"BTC_USD",         //交易对
-        "max_leverage":"100",       //最大杠杆
-        "bid_leverage":"5",         //买入杠杆
-        "ask_leverage":"5",         //卖出杠杆
-        "cross_leverage":"5",       //全仓杠杆
+        "cross_max_leverage": "100",      //满仓最大杠杆
+        "bid_max_leverage":"100",     //逐仓做多最大杠杆
+        "ask_max_leverage": "66.66",  //逐仓做空最大杠杆
+        "bid_leverage": "5",          //逐仓做多杠杆
+        "ask_leverage": "5",          //逐仓做空杠杆
+        "cross_leverage": "5",        //满仓杠杆
         "margin_mode":"2"           //1.全仓,2.逐仓
     },
     "input":null,
