@@ -28,7 +28,7 @@ search: true
 
 # 基本信息
 
-# websocket 永续合约
+# websocket 验证
 
 ws连接地址 wss://td.gte.io/ws
 
@@ -70,6 +70,8 @@ url = "GET/ws"
     }
 
 }
+
+# websocket 永续合约
 
 
 ## instrument 
