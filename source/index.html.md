@@ -28,7 +28,7 @@ search: true
 
 # 基本信息
 
-# Websocket 接口
+# Websocket 永续合约
 
 ws连接地址 wss://td.gte.io/ws
 
@@ -528,7 +528,7 @@ price = ((100000000 * symbol_id) - id) * tick_size
 ```
 
 
-# Http Restful API 
+# Http 永续合约
 
 ## url
 
