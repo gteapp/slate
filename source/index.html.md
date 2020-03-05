@@ -42,17 +42,17 @@ ws连接地址 wss://td.gte.io/ws
 
 **参数说明**
 
-api_key:用户注册api_key时获取
+api_key: 用户注册api_key时获取
 
-expires：当前时间的时间戳(毫秒),推荐当前时间加上3~5秒,防止请求过期
+expires: 当前时间的时间戳(毫秒),推荐当前时间加上3~5秒,防止请求过期
 
-signature:签名 
+signature: 签名 
 
 **签名说明**
 
 加密方式: hmacSha256（apiSecret,url+expires） 
 
-apiSecret:注册api_key时获取
+apiSecret: 注册api_key时获取
 
 url = "GET/ws"   
 
@@ -577,40 +577,7 @@ price = ((100000000 * symbol_id) - id) * tick_size
       * hmacSha256（apiSecret,message） 加密成api签名,由api-signature携带   
 
 
-# http 永续合约
-
-## 查询交易所支持的资产
-
-**限速规则**：5次/1s
-
-**示例**
-
-* GET `baseUrl/v1/api/asset/query`
-
-
-```shell
-# Response
-{
-  "code": 0,
-  "data": {
-    "rows": [
-      {
-        "asset": "BTC"
-      },
-      {
-        "asset": "ETH"
-      }
-    ]
-  },
-  "input": null,
-  "traceId": "",
-  "cost": 0,
-  "error": null,
-  "msg": null,
-  "time": 1573640300898
-}
-```
-
+# http 账户
 
 ## 查询资金账户
 
@@ -753,6 +720,40 @@ volume | string | YES |  数量,最小8位小数点
     "error":null,
     "msg":null,
     "time":1573639855769
+}
+```
+
+# http 永续合约
+
+## 查询交易所支持的资产
+
+**限速规则**：5次/1s
+
+**示例**
+
+* GET `baseUrl/v1/api/asset/query`
+
+
+```shell
+# Response
+{
+  "code": 0,
+  "data": {
+    "rows": [
+      {
+        "asset": "BTC"
+      },
+      {
+        "asset": "ETH"
+      }
+    ]
+  },
+  "input": null,
+  "traceId": "",
+  "cost": 0,
+  "error": null,
+  "msg": null,
+  "time": 1573640300898
 }
 ```
 
