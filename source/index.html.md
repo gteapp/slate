@@ -28,7 +28,7 @@ search: true
 
 # 基本信息
 
-# Websocket 永续合约
+# websocket 永续合约
 
 ws连接地址 wss://td.gte.io/ws
 
@@ -527,8 +527,7 @@ price = ((100000000 * symbol_id) - id) * tick_size
 }
 ```
 
-
-# Http 永续合约
+# http 基本信息
 
 ## url
 
@@ -574,7 +573,9 @@ price = ((100000000 * symbol_id) - id) * tick_size
       * message等于api-key+api-expires+请求参数排序后的字符串  
 
       * hmacSha256（apiSecret,message） 加密成api签名,由api-signature携带   
-  
+
+
+# http 永续合约
 
 ## 查询交易所支持的资产
 
