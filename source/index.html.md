@@ -984,7 +984,7 @@ size 填写15,买卖共30条,最大50
         "96"
       ]
     ],
-    "asks": [            //ask 
+    "asks": [            //ask 卖出
       [
         "10009",
         "229"
@@ -1628,7 +1628,7 @@ size 填写15,买卖共30条,最大50
         "96"
       ]
     ],
-    "asks": [            //ask 
+    "asks": [            //ask 卖出
       [
         "10009",
         "229"
@@ -1641,5 +1641,101 @@ size 填写15,买卖共30条,最大50
     "asset": "BTC",          //资产
     "symbol": "BTC_USD"      //交易对
   },
+}
+```
+
+## 创建活动委托
+
+**限速规则**：20次/1s
+
+**示例**
+
+* POST `baseUrl/v1/api/bb/order/create`
+
+**请求头**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+api-key | string | YES | apiKey
+api-expires | string | YES | 当前时间戳毫秒
+api-signature | string | YES | api签名
+
+
+**请求参数**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+client_oid | string | NO | 客户端订单Id,由您设置的订单id来唯一标识您的订单,字符串,长度40
+asset | string | YES | 资产
+symbol | string | YES | 交易对
+price | string | NO | 价格
+qty | string | YES | 张数
+side | string | YES | 买入1,卖出0
+order_type | string | YES | 委托类型,1:限价
+
+**说明**
+order_type等于1,price必填
+
+
+```shell
+# Response
+      
+{
+    "code":0,
+    "data":{
+        "time":"1573645810154",
+        "order_id":"114813904143597952"   //委托id
+    },
+    "input":null,
+    "traceId":"",
+    "cost":0,
+    "error":null,
+    "msg":null,
+    "time":1573645810155
+}
+```
+
+
+## 撤销委托
+
+**限速规则**：20次/1s
+
+**示例**
+
+* POST `baseUrl/v1/api/bb/order/cancel`
+
+**请求头**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+api-key | string | YES | apiKey
+api-expires | string | YES | 当前时间戳毫秒
+api-signature | string | YES | api签名
+
+
+**请求参数**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+id | string | YES | 委托id
+asset | string | YES | 资产
+symbol | string | YES | 交易对
+
+
+
+```shell
+# Response
+{
+  "code": 0,
+  "data": {
+    "time": "1568639111357",
+    "order_id": "93814490360972800"   //委托id
+  },
+  "input": null,
+  "traceId": "",
+  "cost": 0,
+  "error": null,
+  "msg": null,
+  "time": 1568639111359
 }
 ```
