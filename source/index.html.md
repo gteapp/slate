@@ -1500,7 +1500,7 @@ open_flag | string | YES | 1.开启,0.关闭
 ```
 
 
-## 查询的k线
+## 查询币币的k线
 
 **限速规则**：2次/1s
 
@@ -1550,3 +1550,43 @@ size 最大1440
 ```
 
 
+## 查询instrument数据
+
+**限速规则**：20次/1s
+
+**示例**
+
+* GET `baseUrl/v1/api/bb/instrument/query`
+
+
+**请求参数**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+asset | string | yes | 资产
+symbol | string | no | 交易对 不填查询全部交易对
+
+```shell
+# Response
+{
+  "code": 0,
+  "data": {
+    "time": "1573635077085",
+    "rows": [
+      {
+                "split_char":"/",           //交易对分隔符
+                "asset":"USDT",             //交易区
+                "symbol":"BTC/USDT",        //交易对
+                "price_precision":"2",      //价格小数位
+                "number_precision":"3",     //数量小数位
+                "last_price":"9052.47",     //最新价
+                "high_price":"9146.74",     //24小时最高价
+                "low_price":"9146.74",      //24小时最低价
+                "volume_24h":"23440097",    //24小时成交量
+                "change_rate_24h":"-0.025"  //24小时涨幅       
+      }
+    ]
+  },
+  "time": 1573635077085
+}
+```
