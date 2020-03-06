@@ -675,6 +675,49 @@ asset | string | NO |  资产,不填查询全部资产
 }
 ```
 
+## 查询币币交易账户
+
+**限速规则**：10次/1s
+
+**示例**
+
+* GET `baseUrl/v1/api/account/bb/query`
+
+**请求头**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+api-key | string | YES | apiKey
+api-expires | string | YES | 当前时间戳毫秒
+api-signature | string | YES | api签名
+
+
+**请求参数**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+asset | string | NO |  资产,不填查询全部资产
+
+
+```shell
+# Response
+{
+    "code":0,
+    "data":{
+        "rows":[
+            {
+                "lock":"0",          //锁定的额度
+                "available":"9",     //余额
+                "asset":"BTC",       //资产
+                "total":"9"          //总额
+            }
+        ]
+    },
+    "time":1573639479143
+}
+```
+
+
 ## 账户划转
 
 **限速规则**：1次/1s
@@ -704,7 +747,7 @@ volume | string | YES |  数量,最小8位小数点
 
 **说明**
 
-账户类型 1.资金账户,2.合约账户
+账户类型 1.资金账户,2.合约账户,3.币币账户
 
 
 ```shell
@@ -725,13 +768,13 @@ volume | string | YES |  数量,最小8位小数点
 
 # http 永续合约
 
-## 查询交易所支持的资产
+## 查询交易的资产区
 
 **限速规则**：5次/1s
 
 **示例**
 
-* GET `baseUrl/v1/api/asset/query`
+* GET `baseUrl/v1/api/pc/asset/query`
 
 
 ```shell
@@ -1424,5 +1467,36 @@ open_flag | string | YES | 1.开启,0.关闭
     "msg":null,
     "time":1573716528705
 }
+```
+
+
+# http 币币交易
+
+## 查询交易的资产区
+
+**限速规则**：5次/1s
+
+**示例**
+
+* GET `baseUrl/v1/api/bb/asset/query`
+
+
+```shell
+# Response
+{
+  "code": 0,
+  "data": {
+    "rows": [
+      {
+        "asset": "BTC"
+      },
+      {
+        "asset": "ETH"
+      }
+    ]
+  },
+  "time": 1573640300898
+}
+
 ```
 
