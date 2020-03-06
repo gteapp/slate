@@ -1297,7 +1297,6 @@ lt_trade_id | string | NO | 成交记录id,请求小于trade_id的数据
 count | string | NO | 返回条数,最大100条
 
 
-
 ```shell
 # Response
 {
@@ -1499,4 +1498,55 @@ open_flag | string | YES | 1.开启,0.关闭
 }
 
 ```
+
+
+## 查询的k线
+
+**限速规则**：2次/1s
+
+**示例**
+
+* GET `baseUrl/v1/api/bb/candle/query`
+
+
+**请求参数**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+asset | string | YES | 资产
+symbol | string | YES | 交易对
+start_time | string | NO | 开始时间,时间戳毫秒
+end_time | string | NO | 结束时间,时间戳毫秒
+interval | string | NO | k线时间间隔,分钟
+size | string | NO | 返回条数
+
+**说明**
+interval值 1 5 15 30 60 120 240 360 720 1440 10080 43200
+size 最大1440
+
+
+```shell
+# Response
+{
+  "code": 0,
+  "data": {
+    "time": "1573641132754",
+    "interval": "1",         
+    "rows": [
+      [
+        "1573640940000",    //k线的时间戳毫秒
+        "10009",            //开盘价
+        "10009",            //最高价
+        "10009",            //最低价
+        "10009",            //收盘价
+        "2"                 //量(张数) 
+      ]
+    ],
+    "asset": "BTC",
+    "symbol": "BTC_USD"
+  },
+  "time": 1573641132755
+}
+```
+
 
