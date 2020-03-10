@@ -1729,13 +1729,6 @@ symbol | string | YES | 交易对
   "code": 0,
   "data": {
     "time": "1568639111357",
-    "order_id": "93814490360972800"   //委托id
-  },
-  "input": null,
-  "traceId": "",
-  "cost": 0,
-  "error": null,
-  "msg": null,
-  "time": 1568639111359
+  }
 }
 ```
