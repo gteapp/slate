@@ -1732,3 +1732,99 @@ symbol | string | YES | 交易对
   }
 }
 ```
+
+## 查询委托
+
+**限速规则**：10次/1s
+
+**示例**
+
+* GET `baseUrl/v1/api/bb/order/query`
+
+**请求头**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+api-key | string | YES | apiKey
+api-expires | string | YES | 当前时间戳毫秒
+api-signature | string | YES | api签名
+
+
+**请求参数**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+asset | string | YES | 资产
+symbol | string | NO | 交易对
+filter | string | NO | 过滤器, json格式的字符串
+gt_order_id | string | NO | order_id,请求大于order_id的数据,gt和lt都填,以gt为准
+lt_order_id | string | NO | order_id,请求小于order_id的数据
+count | string | NO | 返回条数最大100条
+
+
+**filter**
+
+* json格式的字符串
+
+* 支持 status(委托状态) , 类型 字符串数组
+
+* 例如{"status":["1","8"]}
+
+```shell
+# Response
+{
+    "code":0,
+    "data":{
+        "time":"1568639823340",
+        "rows":[
+            {    
+              "id": "1",
+              "status": "1",                 //委托状态  1:已创建未匹配 2:新建未成交 4:待取消 8:已取消 16:部分成交 32:全部成交           
+              "fee": "0.001",                //手续费     
+              "price": "10035",              //委托价            
+              "qty": "2",                    //量
+              "bid_flag": "1",               //1.多 0.空
+              "asset":"USD",                  //资产
+              "symbol": "BTC_USD",            //交易对
+              "ctime": "1564482914569",      //委托创建时间
+              "avg_price": "10025",          //平均价
+              "filled_qty": "1.1",           //已成交量
+              "trade_ratio": "0.01",         //成交比例,表示 1%
+              "order_type": "1"              //委托类型 1:限价
+            }
+        ]
+    }
+}
+```
+
+## 查询币币的交易对
+
+**限速规则**：5次/1s
+
+**示例**
+
+* GET `baseUrl/v1/api/bb/symbol/query`
+
+
+**请求参数**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+asset | string | yes | 资产
+
+```shell
+# Response
+{
+  "code": 0,
+  "data": {
+    "time": "1573642959704",
+    "rows": [
+      {
+        "symbol": "BTC_USD",    //交易对
+        "price_precision": "1"  //价格的最大小数位
+        "number_precision": "1"  //数量的最大小数位
+      }
+    ]
+  }
+}
+```
