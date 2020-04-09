@@ -1500,6 +1500,43 @@ open_flag | string | YES | 1.开启,0.关闭
 ```
 
 
+```
+
+## 查询币币的交易对
+
+**限速规则**：5次/1s
+
+**示例**
+
+* GET `baseUrl/v1/api/bb/symbol/query`
+
+
+**请求参数**
+
+名称 | 类型 | 是否必须 | 描述
+----- | ---- | ----- | -----
+asset | string | NO | 资产
+
+```shell
+# Response
+{
+  "code": 0,
+  "data": {
+    "time": "1573642959704",
+    "rows": [
+      {
+        "asset":"USDT",               //资产交易区
+        "symbol": "BTC_USD",          //交易对
+        "min_trade_number": "0.0001", //最小交易量
+        "price_precision": "2"        //价格的小数位精度
+        "number_precision": "4"       //数量的小数位精度
+      }
+    ]
+  }
+}
+```
+
+
 ## 查询币币的k线
 
 **限速规则**：2次/1s
@@ -1795,36 +1832,5 @@ count | string | NO | 返回条数最大100条
         ]
     }
 }
-```
-
-## 查询币币的交易对
-
-**限速规则**：5次/1s
-
-**示例**
-
-* GET `baseUrl/v1/api/bb/symbol/query`
 
 
-**请求参数**
-
-名称 | 类型 | 是否必须 | 描述
------ | ---- | ----- | -----
-asset | string | yes | 资产
-
-```shell
-# Response
-{
-  "code": 0,
-  "data": {
-    "time": "1573642959704",
-    "rows": [
-      {
-        "symbol": "BTC_USD",    //交易对
-        "price_precision": "1"  //价格的最大小数位
-        "number_precision": "1"  //数量的最大小数位
-      }
-    ]
-  }
-}
-```
