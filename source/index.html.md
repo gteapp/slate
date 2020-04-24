@@ -589,7 +589,7 @@ price = ((100000000 * symbol_id) - id) * tick_size
                 "settle_currency":"USDT",      //资产,交易区
                 "price":"8889",               //价格
                 "side":"sell",                //买卖方向
-                "size":"590",                 //量(张数)
+                "size":"590",                 //量
                 "symbol":"BTC/USDT"            //交易对
             },
             {
