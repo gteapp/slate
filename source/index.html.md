@@ -652,7 +652,7 @@ price = ((100000000 * symbol_id) - id) * tick_size
                 "trade_time": "1564295185000",     //成交时间 
                 "side": "sell",                    //sell,buy  
                 "price": "1000.00",                //成交价格
-                "qty": "3"                         //成交量(张数)              
+                "qty": "3"                         //成交量           
               }
             
         ]
