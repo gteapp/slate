@@ -236,7 +236,7 @@ price = ((100000000 * symbol_id) - id) * tick_size
 
 {
     
-    "op":"sub",
+    "op":"unsub",
 
     "args":{"instrument_type":"pc","table":"order_book","settle_currency":"BTC","symbol":"BTC_USD"}
 
@@ -528,6 +528,139 @@ price = ((100000000 * symbol_id) - id) * tick_size
     "time":"1576573209743"
 }
 ```
+
+# websocket 币币交易
+
+## orderBook 
+
+
+**说明**
+
+订阅返回全量数据,推送返回增量数据,bb为币币交易,order_book为订阅管道,USDT为资产,BTC/USDT为交易对
+
+
+action的值partial,delete,update,insert
+
+partial 订阅返回全量数据
+
+delete 删除当前价格的深度
+
+update 更新当前价格的深度,量为最终值
+
+insert 新增当前价格的深度
+
+id当前交易对唯一表示,id和price相互反推,symbol_id和tick_size可以在订阅instrument中获取
+
+计算公式
+id = (100000000 * symbol_id) - (price / tick_size)
+price = ((100000000 * symbol_id) - id) * tick_size
+
+**订阅**
+
+{
+    
+    "op":"sub",
+
+   "args":{"instrument_type":"bb","table":"order_book","settle_currency":"USDT","symbol":"BTC/USDT"}
+
+}
+
+**取消订阅**
+
+{
+    
+    "op":"unsub",
+
+    "args":{"instrument_type":"bb","table":"order_book","settle_currency":"USDT","symbol":"BTC/USDT"}
+
+}
+
+
+```shell
+# Response
+{
+    "action":"partial",
+    "table":"order_book",     
+    "data":[
+     
+            {
+                "id":"399911110",               //唯一标识
+                "instrument_type":"bb",     //交易资产类别,bb币币交易             
+                "settle_currency":"USDT",      //资产,交易区
+                "price":"8889",               //价格
+                "side":"sell",                //买卖方向
+                "size":"590",                 //量(张数)
+                "symbol":"BTC/USDT"            //交易对
+            },
+            {
+                "id":"399911200",
+                "instrument_type":"pc",       
+                "settle_currency":"USDT",
+                "price":"8880",
+                "side":"buy",
+                "size":"677",
+                "symbol":"BTC/USDT"
+            }
+
+        
+    ],
+    "time":"1573281525515"
+}
+```
+
+## trade 
+
+
+**说明**
+
+推送最新的成交记录,bb为币币交易,trade为订阅管道,USDT为资产,BTC/USDT为交易对
+
+
+**订阅**
+
+{
+
+     
+     "op":"sub",
+
+     "args":{"instrument_type":"bb","table":"trade","settle_currency":"USDT","symbol":"BTC/USDT"}
+
+}
+
+**取消订阅**
+
+{
+    
+    "op":"unsub",
+
+    "args":{"instrument_type":"bb","table":"trade","settle_currency":"USDT","symbol":"BTC/USDT"}
+
+}
+
+
+```shell
+# Response
+{
+    "table":"trade",
+    "data": 
+        [
+          
+              {
+                "instrument_type":"bb",          //交易资产类别
+                "settle_currency":"USDT",            //资产
+                "symbol":"BTC/USDT",                //交易对
+                "trade_time": "1564295185000",     //成交时间 
+                "side": "sell",                    //sell,buy  
+                "price": "1000.00",                //成交价格
+                "qty": "3"                         //成交量(张数)              
+              }
+            
+        ]
+     ,
+   "time": "1564295185000"        // 服务器返回数据的时间戳毫秒
+}
+```
+
 
 # http 基本信息
 
