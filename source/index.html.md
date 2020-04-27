@@ -531,6 +531,72 @@ price = ((100000000 * symbol_id) - id) * tick_size
 
 # websocket 币币交易
 
+## instrument 
+
+
+**说明**
+
+最新的各种价格,行情,交易量等,bb为币币交易,instrument为订阅管道,USDT为资产,BTC/USDT为交易对
+
+订阅返回全量数据
+
+推送返回数据变更的字段
+
+action的值partial,update
+
+partial 订阅返回全量数据
+
+update 更新
+
+
+**订阅**
+
+{
+  
+    "op":"sub",
+
+    "args":{"instrument_type":"bb","table":"instrument","settle_currency":"USDT","symbol":"BTC/USDT"}
+
+}
+
+**取消订阅**
+
+{
+    
+    "op":"unsub",
+
+    "args":{"instrument_type":"bb","table":"instrument","settle_currency":"USDT","symbol":"BTC/USDT"}
+
+}
+
+
+```shell
+# Response
+{
+    "table":"instrument",
+    "action":"partial"
+    "data":[
+      {
+        "instrument_type":"bb",            //交易资产类别
+        "settle_currency":"USDT",          //资产
+        "change_rate_24h":"-0.1112",       //24小时价格变化幅度
+        "high_price":"7748.35",            //24小时最高价
+        "low_price":"7513.73",             //24小时最低价  
+        "last_price":"7800",               //最新成交价
+        "min_trade_number":"0.0001",       //最小交易量
+        "split_char":"/",                  //交易对分隔符
+        "symbol":"BTC/USDT",               //交易对
+        "volume_24h":"30022",              //24小时成交量
+        "number_precision":"4",            //交易对数量小数位数
+        "price_precision": "1",            //交易对价格小数位数
+        "symbol_id":"44",                  //交易对id
+        "tick_size":"0.01"                 //tick_size
+       }  
+    ],
+    "time":"1573022591950"
+}
+```
+
 ## orderBook 
 
 
