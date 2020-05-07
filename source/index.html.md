@@ -1327,7 +1327,7 @@ api-signature | string | YES | api签名
 
 名称 | 类型 | 是否必须 | 描述
 ----- | ---- | ----- | -----
-id | string | YES | 委托id
+order_id | string | YES | 委托id
 asset | string | YES | 资产
 symbol | string | YES | 交易对
 
@@ -1953,7 +1953,7 @@ api-signature | string | YES | api签名
 
 名称 | 类型 | 是否必须 | 描述
 ----- | ---- | ----- | -----
-id | string | YES | 委托id
+order_id | string | YES | 委托id
 asset | string | YES | 资产
 symbol | string | YES | 交易对
 
