@@ -15,7 +15,7 @@ search: true
 ## API简介
 ##
 
-欢迎使用GTE API！ 你可以使用此 API 获得市场行情数据，进行交易，并且管理你的账户。 
+欢迎使用 API！ 你可以使用此 API 获得市场行情数据，进行交易，并且管理你的账户。 
 
 在文档的右侧是代码，目前我们仅提供针对 shell 的代码示例。
 
@@ -30,7 +30,7 @@ search: true
 
 # websocket 验证
 
-ws连接地址 wss://td.gte.io/ws
+ws连接地址 wss://td.lianhj.com
 
 客户端每20秒发送字符串{"op":"ping"},服务端返回{"op":"pong"},服务端2分钟没有收到客户端消息,自动断开客户端
 
@@ -732,7 +732,7 @@ price = ((100000000 * symbol_id) - id) * tick_size
 
 ## url
 
-*  baseUrl `https://api.gte.io/`
+*  baseUrl `https://api.lianhj.com`
 
 *  /v1/api/pc/asset/query v1为版本号
 
